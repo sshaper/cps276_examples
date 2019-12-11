@@ -1,0 +1,3 @@
+"John","Smith",45
+"Anna","Clark",37
+"Bill","Murphy",32

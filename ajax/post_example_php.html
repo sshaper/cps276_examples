@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>AJAX Post Example (PHP)</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Post Example</h1>
+      <label for='someText'>Enter some text</label>
+      <input type="text" class="form-control" id="someText" >
+      <input type="button" class="btn btn-primary" style="margin: 15px 0;" id="getInfo" value="Send and Get Info">
+      <div id="result"></div>
+    </div>
+    <script>
+      document.getElementById('getInfo').addEventListener('click', getInfo, true);
+      function getInfo(){
+        var xhr, data;
+        if (window.XMLHttpRequest) {
+          xhr = new XMLHttpRequest();
+        } else {
+          /*CODE FOR OLDER BROWSERS*/
+          xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xhr.onreadystatechange = function() {
+          /*IF EVERYTING IS OKAY THEN DISPLAY THE RESULT */
+          if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("result").innerHTML = this.responseText;
+          }
+        };
+        data = document.getElementById('someText').value;
+        
+        /* THIS IS A POST REQUEST IT WILL SEND AND GET INFORMATION TO/FROM SERVER */
+        xhr.open("POST", "php/post_example.php", true);
+
+        /*IN ORDER TO SEND POST DATA I MUST SEND A FORM HEADER REQUEST */
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        /*I USE THE DATA VARIABLE THAT I CREATED TO STORE THE ACTUAL DATA AND THEN SEND THE DATA USING THE DATA NAME I USE WITH THE SEND REQUEST.  A SEND REQUEST MUST HAVE A NAME THAT ATTACHES TO WHAT IS BEING SENT.*/
+        xhr.send('data=' + data);
+      }
+    </script>
+
+  </body>
+</html>

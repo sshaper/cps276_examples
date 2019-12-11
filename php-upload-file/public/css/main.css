@@ -1,0 +1,5 @@
+body{font: 16px/1.5 sans-serif;}
+#wrapper {width: 1024px; margin: 0 auto;}
+#result {margin: 10px 0 0 0;}
+pre {background: #eee; border-radius: 5px; padding: 5px;}
+

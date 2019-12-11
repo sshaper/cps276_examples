@@ -1,0 +1,6 @@
+body {font-size: 16px;}
+input {margin: 0 0 10px 0;}
+
+nav {background: #eee; height: 30px; border-radius: 5px; margin-bottom: 15px;}
+nav ul{list-style: none;}
+nav ul li {display: inline; line-height: 30px; margin: 0 20px}

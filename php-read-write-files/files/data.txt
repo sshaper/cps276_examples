@@ -1,0 +1,4 @@
+This is a file that
+contains some data 
+for testing the file
+reading functions

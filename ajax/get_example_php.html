@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>AJAX Get Example (PHP)</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	
+  </head>
+  <body>
+    <div class="container">
+      <h1>Get Example</h1>
+      <input type="button" class="btn btn-primary" id="getInfo" value="Get Info">
+      <div id="result"></div>
+    </div>
+    <script>
+      document.getElementById('getInfo').addEventListener('click', getInfo, true);
+      function getInfo(){
+        var xhr;
+        if (window.XMLHttpRequest) {
+          xhr = new XMLHttpRequest();
+        } else {
+          /*CODE FOR OLDER BROWSERS*/
+          xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xhr.onreadystatechange = function() {
+          /*IF EVERYTING IS OKAY THEN DISPLAY THE RESULT */
+          if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("result").innerHTML = this.responseText;
+          }
+        };
+        /* THIS IS A GET REQUEST IT ONLY GETS INFORMATION IT CANNOT SEND IT */
+        xhr.open("GET", "php/get_example.php", true);
+        xhr.send();
+      }
+    </script>
+
+  </body>
+</html>

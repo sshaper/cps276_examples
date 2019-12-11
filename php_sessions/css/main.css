@@ -1,0 +1,17 @@
+*{margin: 0; padding: 0;}
+
+#wrapper {width: 1024px; margin: 0 auto;}
+
+label {display: block;}
+
+.error {color: red; font-size: .9em}
+
+header, main{padding: 10px;}
+
+header{background: #eee}
+
+nav {background: #ccc}
+nav ul {list-style: none;}
+nav ul li {display: inline; margin: 0 0 0 10px;}
+nav ul li a {color: #000; text-decoration: none;}
+nav ul li a:hover {text-decoration: underline;}

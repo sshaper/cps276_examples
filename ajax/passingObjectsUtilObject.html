@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Passing Objects and Using the Util.js Object</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+    textarea {
+      width: 200px;
+      height: 400px;
+    }
+  </style>
+  </head>
+  <body>
+      <div class="container">
+        <h1>Passing Objects and Using the Util.js Object</h1>
+        
+        <input type="button" id="sendObj" class="btn btn-primary" value="Send Object">
+        <div id="errorMsg"></div>
+        <div class="form-group">
+          <label for="fname">First Name</label>
+          <input type="text" class="form-control" id="fname">
+        </div>
+        <div class="form-group">
+          <label for="lname">Last Name</label>
+          <input type="text" class="form-control" id="lname">
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input type="text" class="form-control" id="address">
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" class="form-control" id="city">
+        </div>
+
+        <div id="response"></div>
+
+    </div>
+
+    <script src="js/Util.js"></script>
+    <script>
+      /* ADD A CLICK EVENT TO THE BUTTON WHICH WILL CALL THE SENDOBJ FUNCTION WHEN CLICKED  
+        THE FUNCTIONS THAT BEGIN WITH UTIL ARE PART OF THE UTIL OBJECT.  I WROTE THE UTIL OBJECT TO SIMPLIFY SOME OF COMMON JAVASCRIPT PROCESSES THAT I USE.
+        
+      */
+      Util.addLis(Util.getEl('#sendObj')[0], 'click', sendObj);
+
+      function sendObj(){
+        /* GETS THE VALUES FROM THE FORM FIELDS AND PUTS THEM IN A OBJECT NAMED DATA. THE OBJECT PROPERTIES HOLD THE VALUES FOR THEIR CORRESPONDING FORM FIELDS.  IE DATA.FNAME EQUALS THE VALUES FOR THE FIRST NAME. */
+        let data = {}
+
+        data.fname = Util.getEl('#fname')[0].value;
+        data.lname = Util.getEl('#lname')[0].value;
+        data.address = Util.getEl('#address')[0].value;
+        data.city = Util.getEl('#city')[0].value;
+
+        /* BECAUSE WE CANNOT PASS AN OBJECT TO THE SERVER WE TURN IT INTO A STRING.  JSON.STRINGIFY DOES THAT. */
+        data = JSON.stringify(data);
+
+        /* UTIL SENDREQUEST IS A FUNCTION I WROTE TO SIMPLIFY THE AJAX PROCESS.  INSTEAD OF WRITING IT ALL BY HAND LIKE IN THE PREVIOUS EXAMPLES I JUST CALL THE UTIL.SENDREQUEST FUNCTION
+
+        THE FUNCTION(RES) PART IS WHAT IS CALLED BACK WHEN THE SERVER RETURNS SOME DATA.  THE RES PARAMETER IS THAT RETURNED VALUES. RES.RESPONSETEXT IS THE STRING THAT IS RETURNED.
+
+        JSON.PARSE TAKES THE STRING AND MAKES IT AN OBJECT.  JSON.RESP IS THE PROPERTY THAT CONTIANS THE STRING RETURNED FROM THE SERVER.
+
+         */
+        Util.sendRequest('php/sendObj.php', function(res){
+          
+          /* I USE JSON.PARSE TO COVERT THE JSON STRING INTO A JSON OBJECT */
+          let json = JSON.parse(res.responseText);
+
+          /* THIS CHECKS THE MASTER STATUS.  IF SUCCESS THEN IT DISPLAYS THE DATA RETURNED FROMT THE SERVER, IN THIS CASE THERE IS NO MASTERSTATUS = ERROR, BUT IF THERE WAS WE COULD THEN WRITE AN ERROR MESSAGE. */
+          if(json.masterstatus == "success"){
+            Util.getEl('#response')[0].innerHTML = json.resp;
+          }
+          
+
+        }, data);        
+      }
+    </script>
+     
+  </body>
+</html>

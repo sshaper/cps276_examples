@@ -1,0 +1,28 @@
+[	
+	{
+		"title": "Eric Meyer on CSS", 
+		"author": "Eric Meyer", 
+		"publisher": "New Riders", 
+		"editions" : [
+			{"year":"2002","edition":"First Edition"}
+		] 
+	},
+	{
+		"title": "Web Design in a Nutshell", 
+		"author": "Jennifer Niederst", 
+		"publisher": "O'Reilly and Associates", 
+		"editions" : [
+			{"year":"1999", "edition":"First Edition"},
+			{"year":"2001", "edition":"Second Edition"},
+			{"year":"2006", "edition":"Third Edition"}
+		] 
+	},
+	{
+		"title": "JavaScript: The Good Parts", 
+		"author": "Douglas Crockford", 
+		"publisher": "O'Reilly and Associates", 
+		"editions" : [
+			{"year":"2008","edition":"First Edition"}
+		] 
+	}
+]

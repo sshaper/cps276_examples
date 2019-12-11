@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>AJAX Get JSON Example (PHP)</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	
+  </head>
+  <body>
+    <div class="container">
+      <h1>Get JSON Example</h1>
+      <p>This example does the following:
+      <ul>
+        <li>PHP read the JSON file</li>
+        <li>Check to make sure the file was read
+          <ul>
+            <li>If not read:
+              <ul>
+                <li>Creates a PHP object with the masterstatus of "error" and an error msg</li>
+                <li>Encode that object into a string (json_encode) and sends it back to the browser</li>
+                <li>Terminates the code using "exit" so it will not be processed</li>
+
+              </ul>
+            </li>
+            <li>If read:
+              <ul>
+                  <li>Create a PHP object from the file data using json_decode (it is returned as a string)</li>
+                  <li>Loop through the object and create a unordered list of the book information</li>
+                  <li>Create a PHP object with the masterstatus of "success" and attach the created unordered list as a string</li>
+                  <li>Encode that object into a string (json_encode) and sends it back to the browser</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <p>IMPORTANT NOTE: By using an object we can send different information based upon what was done on the backend.</p>
+      
+      <input type="button" class="btn btn-primary" id="getInfo" value="Get JSON">
+      <div id="result"></div>
+    </div>
+    <script>
+      document.getElementById('getInfo').addEventListener('click', getInfoObj, true);
+      
+      function getInfoObj(){
+        var xhr, result, i=0, j=0;
+        if (window.XMLHttpRequest) {
+          xhr = new XMLHttpRequest();
+        } else {
+          /*CODE FOR OLDER BROWSERS*/
+          xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xhr.onreadystatechange = function() {
+          /*IF EVERYTING IS OKAY THEN DISPLAY THE RESULT */
+          if (this.readyState == 4 && this.status == 200) {
+            
+            /* USE JSON PARSE TO TURN THE STRING BACK INTO A JAVASCRIPT OBJECT*/
+            result = JSON.parse(this.responseText);
+            //console.log(this.responseText);
+
+            /* BASED UPON THE MASTER STATUS DISPLAY AN ERROR MESSAGE OR A LIST 
+              IMPORTANT NOTE: NOTICE BY USING AN OBJECT HOW WE CAN SEND DIFFERENT TYPES OF INFORMATION BASED UPON WHAT HAPPENED IN THE BACKEND
+            */
+            if(result.masterstatus === 'error'){
+              document.getElementById('result').innerHTML = result.msg;
+            }
+            else if (result.masterstatus === 'success'){
+              document.getElementById('result').innerHTML = result.list;
+            }
+          }
+        }
+        /* THIS IS A GET REQUEST IT ONLY GETS INFORMATION IT CANNOT SEND IT */
+        xhr.open("GET", "php/get_json_obj.php", true);
+        xhr.send();
+          
+      }
+    </script>
+
+  </body>
+</html>

@@ -11,11 +11,11 @@ foreach($_POST as $value){
 
 /* IF EVERYTHING IS OKAY BASED UPON WHAT BUTTON IS PRESSED EITHER SEND INFORMATION IN THE WEB ADDRESS OR DONT */
 
-if($_POST['showName']){
+if(isset($_POST['showName'])){
 	header("Location: ../acknowledgment3.php?fname={$_POST['firstName']}&lname={$_POST['lastName']}");
 }
 
-else if($_POST['dontShowName']){
+else if(isset($_POST['dontShowName'])){
 	header("Location: ../acknowledgment3.php");
 }
 

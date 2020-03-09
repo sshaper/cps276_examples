@@ -1,6 +1,14 @@
 <?php
-$filecontents = file_get_contents("../files/data.txt");
+$handle = fopen('../files/csv.txt', 'r');
+$names = "";
 
-echo $filecontents;
+//print_r(fgetcsv($handle, 0));
+
+
+while (($data = fgetcsv($handle, 1000, ",")) !== FALSE){
+    $names .= "<p>Name: {$data[0]} {$data[1]} Age: {$data[2]}</p>";
+}
+
+echo $names;
 
 ?>

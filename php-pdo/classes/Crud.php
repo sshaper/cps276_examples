@@ -160,9 +160,6 @@ class Crud extends PdoMethods{
 			$output .= "<td><input type='text' class='form-control' name='state^^{$row['id']}' value='{$row['state']}'></td>";
 
 			$output .= "<td><input type='checkbox' name='inputDeleteChk[]' value='{$row['id']}'></td></tr>";
-
-			
-
 		}
 		
 		$output .= "</tbody></table></form>";

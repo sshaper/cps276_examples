@@ -71,7 +71,7 @@ class PdoMethods extends DatabaseConn {
 		$this->conn = $this->db->dbOpen();
 	}
 
-	/* CREATES THE BINDINGS (I ONLY HAVE TWO HERE BUT I COULD CREATE OTHERS. */
+	/* CREATES THE BINDINGS */
 	private function createBinding($bindings){
 		foreach ($bindings as $value) {
 			switch($value[2]){

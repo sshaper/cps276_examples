@@ -66,7 +66,7 @@ if(isset($_POST['addName'])){
           </div>
           <div class="col-md-2">
             <label for="state">State</label>
-            <input type="text" class="form-control" placeholder="state" id="state" name="state" value="mi">
+            <input type="text" class="form-control" placeholder="state" id="state" name="state" value="MI">
           </div>
         </div>
         <div class="row">

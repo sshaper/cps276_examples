@@ -6,8 +6,6 @@ $crud = new Crud();
 
 $output = "";
 
-
-
 if(isset($_POST['update'])){
   $output = $crud->updateNames($_POST);
 }

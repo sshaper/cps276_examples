@@ -12,8 +12,7 @@ if($file['size'] < 100000){
 		/* IT IS VERY IMPORTANT TO MAKE SURE YOU HAVE DOUBLE QUOTES AROUND THE PROPERTY NAME AND VALUE, OTHERWISE YOU WILL GET PARSE ERRORS IN YOUR JSON PARSE ON THE JAVASCRIPT END*/
 		
 $txt = <<<TXT
-[{"filename":"$data", "filepath": "uploadedfile/$filename"}]
-
+[{"filename":"$filename", "filepath": "uploadedfile/$filename"}]
 TXT;
 
 		/* IN THIS SITUATION I SAVED THE FILE TO A TEXT FILE BUT I COULD HAVE JUST AS EASILY SAVED IT TO A DATABASE.*/

@@ -32,7 +32,9 @@ class Crud extends PdoMethods{
 
 		/* HERE I CREATE THE SQL STATEMENT I AM BINDING THE PARAMETERS */
 		$sql = "INSERT INTO short_names (first_name, last_name, eye_color, gender, state) VALUES (:fname, :lname, :eyecolor, :gender, :state)";
-	    
+
+
+		 
 	    /* THESE BINDINGS ARE LATER INJECTED INTO THE SQL STATEMENT THIS PREVENTS AGAIN SQL INJECTIONS */
 	    $bindings = [
 			[':fname',$_POST['fname'],'str'],
@@ -65,8 +67,7 @@ class Crud extends PdoMethods{
 				/* HERE I CREATE THE SQL STATEMENT I AM BINDING THE PARAMETERS */
 				$sql = "UPDATE short_names SET first_name = :fname, last_name = :lname, eye_color = :eyecolor, gender = :gender, state = :state WHERE id = '{$id}'";
 
-				//return $sql;
-
+				//THE ^^ WAS USED TO MAKE EACH ITEM UNIQUE BY COMBINING FNAME WITH THEY ID
 				$bindings = [
 					[':fname', $post["fname^^{$id}"], 'str'],
 					[':lname', $post["lname^^{$id}"], 'str'],

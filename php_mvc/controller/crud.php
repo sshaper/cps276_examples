@@ -127,7 +127,7 @@ function updateName($dataObj){
 	}
 }
 
-/* THIS FUNCTION WILL DELETE THE NAME AND OTHE INFORMATION FOR THE ROW THAT WAS CLICKED */
+/* THIS FUNCTION WILL DELETE THE NAME AND OTHER INFORMATION FOR THE ROW THAT WAS CLICKED */
 function deleteName($dataObj){
 	$pdo = new PdoMethods();
 	$sql = "DELETE FROM short_names WHERE id = :id";

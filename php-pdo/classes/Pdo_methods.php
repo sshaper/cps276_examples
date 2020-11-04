@@ -15,54 +15,82 @@ class PdoMethods extends DatabaseConn {
 	/* THIS METHOD IS FOR ALL SELECT STATEMENTS THAT NEED TO HAVE A BINDING TO PROETECT THE DATA.  THE SCRIPT TAKES THE SQL STATEMENTS AN THE BINDING ARRAY AS ITS PARAMETERS AND PERFORMS THE QUERY.  IT WILL RUN THE QUERY AND RETURN THE RESULT AS AN ASSOCIATIVE ARRAY OR AN ERROR STRING.*/
 	public function selectBinded($sql, $bindings){
 		$this->error = false;
-		$this->db_connection();
-		$this->sth = $this->conn->prepare($sql);
-		$this->createBinding($bindings);
-		$this->executeStatement();
-		$this->conn = null;
-		if(!$this->error){
-			return $this->sth->fetchAll(PDO::FETCH_ASSOC);
+
+		//I CREATE A TRY CATCH BLOCK TO CATCH ANY ERRORS THAT MIGHT ARRISE AND RETURNS AN ERROR MESSAGE.
+
+		/*IMPORTANT!!! IF YOU WANT THE FATAL ERROR TO DISPLAY ON THE WEBPAGE AND NOT THE ERROR MESSAGE THEN COMMENT OUT THE TRY CATCH PART AND JUST RUN THE STATEMENTS WITHIN THE TRY*/
+		try{
+			$this->db_connection();
+			$this->sth = $this->conn->prepare($sql);
+			$this->createBinding($bindings);
+			$this->execute();
 		}
-		else{
+		catch(PDOException $e){
+			
+			//THIS WILL OUTPUT THE ERROR MESSAGE TO THE BROWSER REMOVE IF IN PRODUCTION
+			echo $e->getMessage();
 			return 'error';
+			
 		}
+		
+		//THIS CLOSES THE DATABASE CONNECTION
+		$this->conn = null;
+		
+		//THIS RETURNS A RECORD SET
+		return $this->sth->fetchAll(PDO::FETCH_ASSOC);
+			
 	}
 
 	/* THIS FUNCTION DOES THE SAME AS THE ABOVE BUT DOES NOT NEED ANY BINDED PARAMETERS ARE NO PARAMTERS ARE PASSED */
 	public function selectNotBinded($sql){
-		$this->error = false;
-		try{
-			$this->db_connection();
-			$this->sth = $this->conn->prepare($sql);
-			$this->executeStatement();
-		}
-		catch (PDOException $Exception){
-			return 'error';
-		}
-		
-		$this->conn = null;
-		if(!$this->error){
+			$this->error = false;
+			
+			//I CREATE A TRY CATCH BLOCK TO CATCH ANY ERRORS THAT MIGHT ARRISE AND RETURNS AN ERROR MESSAGE.
+
+			/*IMPORTANT!!! IF YOU WANT THE FATAL ERROR TO DISPLAY ON THE WEBPAGE AND NOT THE ERROR MESSAGE THEN COMMENT OUT THE TRY CATCH PART AND JUST RUN THE STATEMENTS WITHIN THE TRY*/
+			try{
+				$this->db_connection();
+				$this->sth = $this->conn->prepare($sql);
+				$this->sth->execute();
+			}
+			catch (PDOException $e){
+				//THIS WILL OUTPUT THE ERROR MESSAGE TO THE BROWSER REMOVE IF IN PRODUCTION
+				echo $e->getMessage();
+				return 'error';
+			}
+			
+			//THIS CLOSES THE DATABASE CONNECTION
+			$this->conn = null;
+			
+			//THIS RETURNS THE RECORD SET AS AN ARRAY
 			return $this->sth->fetchAll(PDO::FETCH_ASSOC);
+
 		}
-		else{
-			return 'error';
-		}
-	}
 
 	/* BECAUSE ONLY SELECT QUERIES RETURN A VALUE THE DOES ALL THE REST CREATE, UPDATE, DELETE */
 	public function otherBinded($sql, $bindings){
 		$this->error = false;
-		$this->db_connection();
-		$this->sth = $this->conn->prepare($sql);
-		$this->createBinding($bindings);
-		$this->executeStatement();
-		$this->conn = null;
-		if(!$this->error){
-			return 'noerror';
+		
+		//I CREATE A TRY CATCH BLOCK TO CATCH ANY ERRORS THAT MIGHT ARRISE AND RETURNS AN ERROR MESSAGE.
+		
+		/*IMPORTANT!!! IF YOU WANT THE FATAL ERROR TO DISPLAY ON THE WEBPAGE AND NOT THE ERROR MESSAGE THEN COMMENT OUT THE TRY CATCH PART AND JUST RUN THE STATEMENTS WITHIN THE TRY*/
+		try{
+			$this->db_connection();
+			$this->sth = $this->conn->prepare($sql);
+			$this->createBinding($bindings);
+			$this->sth->execute();
 		}
-		else{
+		catch(PDOException $e) {
+			//THIS WILL OUTPUT THE ERROR MESSAGE TO THE BROWSER REMOVE IF IN PRODUCTION
+			echo $e->getMessage();
 			return 'error';
 		}
+
+		//THIS CLOSES THE DATABASE CONNECTION
+		$this->conn = null;
+
+		//NO ERROR MEANS EVERYTHING WORKED
+		return 'noerror';
 	}
 
 	/* CREATES A CONNECTION TO THE DATABASE */
@@ -73,25 +101,11 @@ class PdoMethods extends DatabaseConn {
 
 	/* CREATES THE BINDINGS */
 	private function createBinding($bindings){
-		foreach ($bindings as $value) {
+		foreach($bindings as $value){
 			switch($value[2]){
-				case 'int' : $this->sth->bindParam($value[0],$value[1], PDO::PARAM_INT);
-				case 'str' : $this->sth->bindParam($value[0],$value[1], PDO::PARAM_STR);
-			}	
-			
-		}
-	}
-
-
-	/* THIS METHOD EXECUTES THE STATEMENT AND IF THAT FAILS IT WRITES THE ERROR THE AN ERROR LOG. */
-	private function executeStatement(){
-		try{
-			$this->sth->execute();
-		}
-		catch (PDOException $Exception){
-			$error = date('F-j-Y \a\t h:i:s')." - ERROR! ".$Exception->getMessage()."\n";
-			file_put_contents('../logs/pdo_errors.log', $error, FILE_APPEND);
-			$this->error = true;
+				case "str" : $this->sth->bindParam($value[0],$value[1], PDO::PARAM_STR);
+				case "int" : $this->sth->bindParam($value[0],$value[1], PDO::PARAM_INT);
+			}
 		}
 	}
 }

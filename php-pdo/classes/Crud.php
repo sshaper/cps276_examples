@@ -10,7 +10,10 @@ class Crud extends PdoMethods{
 
 		/* CREATE THE SQL */
 		$sql = "SELECT * FROM short_names";
+
+		//PROCESS THE SQL AND GET THE RESULTS
 		$records = $pdo->selectNotBinded($sql);
+
 		/* IF THERE WAS AN ERROR DISPLAY MESSAGE */
 		if($records == 'error'){
 			return 'There has been and error processing your request';
@@ -33,8 +36,7 @@ class Crud extends PdoMethods{
 		/* HERE I CREATE THE SQL STATEMENT I AM BINDING THE PARAMETERS */
 		$sql = "INSERT INTO short_names (first_name, last_name, eye_color, gender, state) VALUES (:fname, :lname, :eyecolor, :gender, :state)";
 
-
-		 
+			 
 	    /* THESE BINDINGS ARE LATER INJECTED INTO THE SQL STATEMENT THIS PREVENTS AGAIN SQL INJECTIONS */
 	    $bindings = [
 			[':fname',$_POST['fname'],'str'],
@@ -65,7 +67,7 @@ class Crud extends PdoMethods{
 				$pdo = new PdoMethods();
 
 				/* HERE I CREATE THE SQL STATEMENT I AM BINDING THE PARAMETERS */
-				$sql = "UPDATE short_names SET first_name = :fname, last_name = :lname, eye_color = :eyecolor, gender = :gender, state = :state WHERE id = '{$id}'";
+				$sql = "UPDATE short_names SET first_name = :fname, last_name = :lname, eye_color = :eyecolor, gender = :gender, state = :state WHERE id = :id";
 
 				//THE ^^ WAS USED TO MAKE EACH ITEM UNIQUE BY COMBINING FNAME WITH THEY ID
 				$bindings = [
@@ -74,6 +76,7 @@ class Crud extends PdoMethods{
 					[':eyecolor', $post["color^^{$id}"], 'str'],
 					[':gender', $post["gender^^{$id}"], 'str'],
 					[':state', $post["state^^{$id}"], 'str'],
+					[':id', $id, 'str']
 				];
 
 				$result = $pdo->otherBinded($sql, $bindings);
@@ -129,8 +132,6 @@ class Crud extends PdoMethods{
 			return "No names selected to delete";
 		}
 	}
-
-	
 
 	/*THIS FUNCTION TAKES THE DATA FROM THE DATABASE AND RETURN AN UNORDERED LIST OF THE DATA*/
 	private function createList($records){

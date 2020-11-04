@@ -23,7 +23,7 @@ class PdoMethods extends DatabaseConn {
 			$this->db_connection();
 			$this->sth = $this->conn->prepare($sql);
 			$this->createBinding($bindings);
-			$this->execute();
+			$this->sth->execute();
 		}
 		catch(PDOException $e){
 			

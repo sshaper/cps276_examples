@@ -2,7 +2,6 @@
 /* THIS CLASS EXTENDS THE DATABASE CONNECTION CLASS AND BUILD ON IT WITH PDO COMMANDS */
 /* THE DATABASE CONNECTION CLASS IS STORED OUTSIDE OF THE EXAMPLE FILES SO YOU CANNOT SEE THE CONNECTION INFORMATION. ALSO IT IS MORE SECURE*/
 require_once "Db_conn.php";
-date_default_timezone_set('America/Detroit');
 class PdoMethods extends DatabaseConn {
 
 	
@@ -91,6 +90,31 @@ class PdoMethods extends DatabaseConn {
 
 		//NO ERROR MEANS EVERYTHING WORKED
 		return 'noerror';
+	}
+
+	public function otherNotBinded($sql){
+		$this->error = false;
+			
+			//I CREATE A TRY CATCH BLOCK TO CATCH ANY ERRORS THAT MIGHT ARRISE AND RETURNS AN ERROR MESSAGE.
+
+			/*IMPORTANT!!! IF YOU WANT THE FATAL ERROR TO DISPLAY ON THE WEBPAGE AND NOT THE ERROR MESSAGE THEN COMMENT OUT THE TRY CATCH PART AND JUST RUN THE STATEMENTS WITHIN THE TRY*/
+			try{
+				$this->db_connection();
+				$this->sth = $this->conn->prepare($sql);
+				$this->sth->execute();
+			}
+			catch (PDOException $e){
+				//THIS WILL OUTPUT THE ERROR MESSAGE TO THE BROWSER REMOVE IF IN PRODUCTION
+				echo $e->getMessage();
+				return 'error';
+			}
+			
+			//THIS CLOSES THE DATABASE CONNECTION
+			$this->conn = null;
+			
+			//THIS RETURNS NOERROR IF NO ERRORS
+			return 'noerror';
+
 	}
 
 	/* CREATES A CONNECTION TO THE DATABASE */

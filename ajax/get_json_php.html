@@ -25,7 +25,12 @@
         xhr.onreadystatechange = function() {
           /*IF EVERYTING IS OKAY THEN DISPLAY THE RESULT */
           if (this.readyState == 4 && this.status == 200) {
+            
+            
+            //console.log(this.responseText);
+
             books = JSON.parse(this.responseText);
+            
 
             /*PARSE THE JSON*/
             list = '<ul>';

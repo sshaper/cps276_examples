@@ -7,55 +7,55 @@ else {
 }
 
 function processFile(){
+	// I PUT THE PHOTO INTO A DIRECTORY NAMED PHOTOS WHICH IS ALREADY ON THE SERVER AND HAS 777 FILE PERMISSIONS
 	
-	/* I HAVE TO USE THE GLOBAL SO THAT OUTPUT CAN BE USED OUTSIDE OF THE PROCESSFILE FUNCTION*/
+	//I HAD TO MAKE $OUTPUT A GLOBAL VARIBLE SO IT COULD BE USED INSIDE AND OUTSIDE THIS FUNCTION
 	global $output;
-	if (!is_dir('photos')){
-		mkdir('photos');
-		chmod('photos',0777);
+	
+	//CHECK TO SEE IF A FILE WAS UPLOADED.  ERROR EQUALS 4 MEANS THERE WAS NO FILE UPLOADED
+	if ($_FILES["photo"]["error"] == 4){
+		$output = "No file was uploaded. Make sure you choose a file to upload.";
 	}
 
-	if (isset($_FILES["photo"]) and $_FILES["photo"]["error"] == UPLOAD_ERR_OK ){
+	/*MAKE SURE THE FILE SIZE IS LESS THAN 1000000 BYTES.  THE ERROR EQUALS ONE MEANS THE FILE WAS TOO BIG ACCORDING TO THE SETINGS IN
+	post_max_size LOCATED IN THE PHP INI FILE.*/
+	elseif($_FILES["photo"]["size"] > 1000000 || $_FILES["photo"]["error"] == 1){
+		$output = "The photo is too large";
+	}
 
-		if ($_FILES["photo"]["type"] != "image/jpeg" && $_FILES["photo"]["type"] != "image/png") {
+	//CHECK TO MAEK SURE IT IS THE CORRECT FILE TYPE IN THIS CASE JPEG OR PNG
+	elseif ($_FILES["photo"]["type"] != "image/jpeg" && $_FILES["photo"]["type"] != "image/png") {
 
-			$output = "<p>JPEG or PNG photos only, thanks!</p>";
-		}
+		$output = "<p>JPEG or PNG photos only, thanks!</p>";
+	}
 
-		else if (!move_uploaded_file( $_FILES["photo"]["tmp_name"], "photos/" . basename($_FILES["photo"]["name"]))){
-			$output = "<p>Sorry, there was a problem uploading that photo.</p>" .$_FILES["photo"]["error"] ;
-		}
-
-		else {
-			$output = displayThanks();
-		}
-
+	//IF ALL GOES WELL MOVE FILE FROM TEMP LCOATION TO THE PHOTOS DIRECTORY 
+	elseif (!move_uploaded_file( $_FILES["photo"]["tmp_name"], "photos/" . $_FILES["photo"]["name"])){
+			$output = "<p>Sorry, there was a problem uploading that photo.</p>";
 	}
 	else {
-			switch( $_FILES["photo"]["error"] ) {
-				case UPLOAD_ERR_INI_SIZE: $message = "The photo is larger than the server allows.";break;
-				case UPLOAD_ERR_FORM_SIZE: $message = "The photo is larger than the script allows.";break;
-				case UPLOAD_ERR_NO_FILE: $message = "No file was uploaded. Make sure you choose a file to upload.";break;
-				default: $message = "Please contact your server administrator for help.";
-			}
-
-			$output = "<p>Sorry, there was a problem uploading that photo. $message</p>";
+		//IF ALL GOES WELL CALL DISPLAY THANKS METHOD	
+		$output = displayThanks();
 	}
 
 }
 
 function displayThanks() {
 
-$ack = <<<HTML
-	<h1>Thank You</h1>
-	<p>Thanks for uploading your photo! {$_POST['visitorName']}</p>
+/*
+NOTICE I USE THE POST SUPERGLOBAL ARRAY TO GET THE NAME AND NOT
+THE FLES SUPERGLOBAL ARRAY.  ALL FILES USE $_FILES ALL TEXT ENTERIES USE $_POST
+*/
 
+return <<<HTML
+	<h1>Thank You!</h1>
+	
+	<p>Thanks  {$_POST['visitorName']} for uploading your photo!</p>
 	<p>Here's your photo:</p>
 	<p><img src="photos/{$_FILES['photo']['name']}" alt="Photo"></p>
 
 HTML;
-
-	return $ack;
+	
 }
 
 
@@ -72,9 +72,7 @@ HTML;
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <title>Basic Form</title>
-    <style>
-      input[type="radio"]{margin: 0 10px 0 0;}
-    </style>
+    
   </head>
   <body>
     <main class="container">

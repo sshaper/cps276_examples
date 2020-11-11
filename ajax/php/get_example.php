@@ -1,2 +1,8 @@
 <?php
-echo "Hello Class I was retrieved via an AJAX request";
+ echo "Hello class this is an ajax request";
+?>
+
+
+
+
+

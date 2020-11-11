@@ -23,7 +23,7 @@ function processFile(){
 		$output = "The photo is too large";
 	}
 
-	//CHECK TO MAEK SURE IT IS THE CORRECT FILE TYPE IN THIS CASE JPEG OR PNG
+	//CHECK TO MAKE SURE IT IS THE CORRECT FILE TYPE IN THIS CASE JPEG OR PNG
 	elseif ($_FILES["photo"]["type"] != "image/jpeg" && $_FILES["photo"]["type"] != "image/png") {
 
 		$output = "<p>JPEG or PNG photos only, thanks!</p>";

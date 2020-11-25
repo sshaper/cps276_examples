@@ -10,6 +10,8 @@ class Validation{
 		switch($regex){
 			case "name": return $this->name($value); break;
 			case "phone": return $this->phone($value); break;
+		
+			
 		}
 	}
 
@@ -24,6 +26,7 @@ class Validation{
 		return $this->setError($match);
 	}
 
+	
 	private function setError($match){
 		if(!$match){
 			$this->error = true;

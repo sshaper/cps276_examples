@@ -15,7 +15,7 @@ class StickyForm extends Validation {
 					$elementsArr['masterStatus']['status'] = "error";
 				}
 				/*HERE I PUT THE VALUES INTO THE ARRAY TO MAKE IS STICKY.*/
-				$elementsArr[$k]['value'] = $GlobalPost[$k];
+				$elementsArr[$k]['value'] = htmlentities($GlobalPost[$k]);
 			}
 
 			/*IF THE TYPE IS SELECT THEN IT CHECKS TO MAKE SURE WHAT WAS SELECTED IS STICY.  IT DOES NOT CHECK ANY VALIDATION ISSUES AS A SELECT BOX TECHNICALLY WILL BE CORRECT. HOWEVER IT COULD BE SET UP TO CHECK FOR CORRECT INPUT */ 

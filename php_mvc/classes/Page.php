@@ -13,5 +13,7 @@ class Page {
       </nav>
 NAV;
 		return $nav;
-	}
+  }
+ 
+
 }

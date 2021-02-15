@@ -17,11 +17,12 @@ require_once 'server/pageRoutes.php';
   </head>
   <body>
     <div class="container">
-
-      <h1><?php echo $pageData['heading']; ?></h1>
-      <?php echo $pageData['nav']; ?>
-      <?php echo $pageData['content']; ?>
+      <?php 
+        echo "<h1>{$pageData['heading']}</h1>";
+        echo $pageData['nav'];
+        echo $pageData['content'];
+      ?>
     </div>
-  <?php echo $pageData['js']; ?>
+      <?php echo $pageData['js']; ?>
   </body>
 </html>

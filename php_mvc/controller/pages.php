@@ -15,7 +15,6 @@ function homePage(){
 }
 
 function addNamePage(){
-	$nameList = getNames('list');
 	$page = new Page();
 
 	$pageData['title'] = "Add Name Page";

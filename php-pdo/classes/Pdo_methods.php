@@ -16,8 +16,7 @@ class PdoMethods extends DatabaseConn {
 		$this->error = false;
 
 		//I CREATE A TRY CATCH BLOCK TO CATCH ANY ERRORS THAT MIGHT ARRISE AND RETURNS AN ERROR MESSAGE.
-
-		/*IMPORTANT!!! IF YOU WANT THE FATAL ERROR TO DISPLAY ON THE WEBPAGE AND NOT THE ERROR MESSAGE THEN COMMENT OUT THE TRY CATCH PART AND JUST RUN THE STATEMENTS WITHIN THE TRY*/
+		
 		try{
 			$this->db_connection();
 			$this->sth = $this->conn->prepare($sql);

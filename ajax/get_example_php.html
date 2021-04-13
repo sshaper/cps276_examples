@@ -18,20 +18,28 @@
       
       function getInfo(){
         var xhr;
+
+        //THIS CREATES THE REQUEST OBJECT
         if (window.XMLHttpRequest) {
           xhr = new XMLHttpRequest();
         } else {
           /*CODE FOR OLDER BROWSERS*/
           xhr = new ActiveXObject("Microsoft.XMLHTTP");
         }
+
+        //THIS CHECKS THE STATE OF THE REQUEST OBJECT
         xhr.onreadystatechange = function() {
-          /*IF EVERYTING IS OKAY THEN DISPLAY THE RESULT */
+          
+          /*IF EVERYTING IS OKAY (READYSTATE == 4 AND STATUS == 200) THEN DISPLAY THE RESULT */
           if (this.readyState == 4 && this.status == 200) {
             document.getElementById("result").innerHTML = this.responseText;
           }
         };
-        /* THIS IS A GET REQUEST IT ONLY GETS INFORMATION IT CANNOT SEND IT */
+
+        //THIS IS A GET REQUEST IT ONLY GETS INFORMATION IT CANNOT SEND IT
         xhr.open("GET", "php/get_example.php", true);
+
+        //SENDS THE REQUEST
         xhr.send();
       }
     </script>

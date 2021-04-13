@@ -22,19 +22,19 @@
         <div id="errorMsg"></div>
         <div class="form-group">
           <label for="fname">First Name</label>
-          <input type="text" class="form-control" id="fname">
+          <input type="text" class="form-control" id="fname" value="Scott">
         </div>
         <div class="form-group">
           <label for="lname">Last Name</label>
-          <input type="text" class="form-control" id="lname">
+          <input type="text" class="form-control" id="lname" value="Shaper">
         </div>
         <div class="form-group">
           <label for="address">Address</label>
-          <input type="text" class="form-control" id="address">
+          <input type="text" class="form-control" id="address" value="123 Somewhere">
         </div>
         <div class="form-group">
           <label for="city">City</label>
-          <input type="text" class="form-control" id="city">
+          <input type="text" class="form-control" id="city" value="Anyplace">
         </div>
 
         <div id="response"></div>
@@ -73,11 +73,15 @@
           /* I USE JSON.PARSE TO COVERT THE JSON STRING INTO A JSON OBJECT */
           let json = JSON.parse(res.responseText);
 
+          console.log(res.responseText);
+
+          
+
           /* THIS CHECKS THE MASTER STATUS.  IF SUCCESS THEN IT DISPLAYS THE DATA RETURNED FROMT THE SERVER, IN THIS CASE THERE IS NO MASTERSTATUS = ERROR, BUT IF THERE WAS WE COULD THEN WRITE AN ERROR MESSAGE. */
           if(json.masterstatus == "success"){
             Util.getEl('#response')[0].innerHTML = json.resp;
           }
-          
+                  
 
         }, data);        
       }

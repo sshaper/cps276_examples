@@ -1,7 +1,6 @@
 <?php
 $error = '';
 
-
 if(isset($_POST['submit'])){
   /* IF THE USERNAME AND PASSWORD MATCH THEN REDIRECT TO */
   if($_POST['username'] === "admin" && $_POST['password'] === "password"){

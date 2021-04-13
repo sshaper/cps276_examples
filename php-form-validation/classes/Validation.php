@@ -10,8 +10,7 @@ class Validation{
 		switch($regex){
 			case "name": return $this->name($value); break;
 			case "phone": return $this->phone($value); break;
-		
-			
+					
 		}
 	}
 

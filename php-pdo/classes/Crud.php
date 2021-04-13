@@ -49,7 +49,7 @@ class Crud extends PdoMethods{
 		/* I AM CALLING THE OTHERBINDED METHOD FROM MY PDO CLASS */
 		$result = $pdo->otherBinded($sql, $bindings);
 
-		/* HERE I AM USING AN OBJECT TO RETURN WHETHER SUCCESSFUL FOR ERROR */
+		/* HERE I AM RETURNING EITHER AN ERROR STRING OR A SUCCESS STRING */
 		if($result === 'error'){
 			return 'There was an error adding the name';
 		}

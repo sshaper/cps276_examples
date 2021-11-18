@@ -12,3 +12,5 @@ function getNames(){
 
 	return $output;
 }
+
+?>

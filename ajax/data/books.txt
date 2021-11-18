@@ -2,7 +2,7 @@
 	{
 		"title": "Eric Meyer on CSS", 
 		"author": "Eric Meyer", 
-		"publisher": "New Riders", 
+		"publisher": "New Riders",
 		"editions" : [
 			{"year":"2002","edition":"First Edition"}
 		] 

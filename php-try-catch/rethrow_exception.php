@@ -7,7 +7,7 @@ class custom_exception extends Exception {
     }
 }
 
-$email = "someonesomeoneexample.com";
+$email = "someonesomeone@example.com";
 
 
 try {

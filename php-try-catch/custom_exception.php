@@ -7,13 +7,13 @@ class custom_exception extends Exception {
     }
 }
 
-$email = "someonesomeone@examcom";
+$email = "someonesomeone@exa.com";
 
 try {
     //checking if
     if(filter_var($email, FILTER_VALIDATE_EMAIL) === FALSE) {
-    //throwing an exception in case email is not valid
-    throw new custom_exception($email);
+        //throwing an exception in case email is not valid
+        throw new custom_exception($email);
     }
     else {
         $output = "The email is valid";

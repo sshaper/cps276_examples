@@ -61,6 +61,8 @@
         /* BECAUSE WE CANNOT PASS AN OBJECT TO THE SERVER WE TURN IT INTO A STRING.  JSON.STRINGIFY DOES THAT. */
         data = JSON.stringify(data);
 
+        //console.log(data);
+
         /* UTIL SENDREQUEST IS A FUNCTION I WROTE TO SIMPLIFY THE AJAX PROCESS.  INSTEAD OF WRITING IT ALL BY HAND LIKE IN THE PREVIOUS EXAMPLES I JUST CALL THE UTIL.SENDREQUEST FUNCTION
 
         THE FUNCTION(RES) PART IS WHAT IS CALLED BACK WHEN THE SERVER RETURNS SOME DATA.  THE RES PARAMETER IS THAT RETURNED VALUES. RES.RESPONSETEXT IS THE STRING THAT IS RETURNED.
@@ -69,19 +71,13 @@
 
          */
         Util.sendRequest('php/sendObj.php', function(res){
-          
           /* I USE JSON.PARSE TO COVERT THE JSON STRING INTO A JSON OBJECT */
           let json = JSON.parse(res.responseText);
-
-          console.log(res.responseText);
-
-          
 
           /* THIS CHECKS THE MASTER STATUS.  IF SUCCESS THEN IT DISPLAYS THE DATA RETURNED FROMT THE SERVER, IN THIS CASE THERE IS NO MASTERSTATUS = ERROR, BUT IF THERE WAS WE COULD THEN WRITE AN ERROR MESSAGE. */
           if(json.masterstatus == "success"){
             Util.getEl('#response')[0].innerHTML = json.resp;
-          }
-                  
+          }        
 
         }, data);        
       }

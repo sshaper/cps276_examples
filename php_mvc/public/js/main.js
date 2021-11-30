@@ -153,7 +153,7 @@ crud.sendRequest = function(data){
 			}
 		}
 	};
-	xhttp.open("POST", "server/xhrRoutes.php", true);
+	xhttp.open("POST", "routes/xhrRoutes.php", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("data=" + data);
 }

@@ -1,5 +1,5 @@
 <?php
-require_once 'server/pageRoutes.php';
+require_once 'routes/pageRoutes.php';
 ?>
 
 <!doctype html>

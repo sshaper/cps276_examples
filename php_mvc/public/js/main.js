@@ -15,13 +15,29 @@ crud.init = function(){
 
 /* THIS FUNCTION ADDS AND NAME AND OTHER INFORMATION TO THE DATBASE */
 crud.addName = function(){
-	var inputs, i, data = {}, res, name = '';
+	var inputs, i, data = {}, res, name = '', error;
 	inputs = document.querySelectorAll('input[type="text"]');
 	i = 0;
 	data.flag = 'addName';
+	error=false;
+
+	//CLEAR ANY PAST ERROR MESSAGES
+	crud.clearErrors(inputs);
+
+
 	while(i < inputs.length){
 		name = inputs[i].name;
-		if(name == 'state'){
+
+		console.log(inputs[i].value);
+
+		//IF ANY VALUE IS EMPTY THEN STOP THE LOOP AND CALL THE DISPLAY ERRORS FUNCTION
+		if(inputs[i].value == ""){
+			crud.displayErrors(inputs);
+			error=true;
+			break;
+		}
+
+		else if(name == 'state'){
 			data[name] = inputs[i].value.toUpperCase();
 		}
 		else{
@@ -30,9 +46,39 @@ crud.addName = function(){
 		
 		i++;
 	}
-	data = JSON.stringify(data);
-	crud.sendRequest(data);
+	if(!error){
+		data = JSON.stringify(data);
+		crud.sendRequest(data);
+	}
+	
 }
+
+//CLEARS ANY PREVIOUS ERRORS
+crud.clearErrors = function(inputs){
+	var i = 0;
+	while(i < inputs.length){
+		if(inputs[i].previousElementSibling.firstElementChild){
+			inputs[i].previousElementSibling.removeChild(inputs[i].previousElementSibling.firstElementChild);
+		}
+		i++;
+
+	}
+
+}
+
+//LOOPS THROUGH ALL INPUTS AND ADDS AN REQUIRED MESSAGE FOR THAT FIELD.
+crud.displayErrors = function(inputs){
+	var i = 0;
+	while(i < inputs.length){
+		if(inputs[i].value == ""){
+			inputs[i].previousElementSibling.innerHTML += "<span style='color: red; margin-left: 10px'>* required</span>";
+		}
+		i++;
+	}
+
+}
+
+
 
 /* THE FOLLOWING FUNCTION WILL EITHER DELETE OR UPDATE A RECORD BASED UPON WHAT BUTTON IS CLICKED */
 crud.updateDeleteList = function(e){

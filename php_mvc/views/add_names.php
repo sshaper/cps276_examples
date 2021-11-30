@@ -9,11 +9,11 @@ $page = <<<HTML
   <div class="row">
     <div class="col-md-3">
       <label for="fname">First Name</label>
-      <input type="text" class="form-control" placeholder="first name" id="fname" name="fname" value="Scott">
+      <input type="text" class="form-control" placeholder="first name" id="fname" name="fname" >
     </div>
     <div class="col-md-3">
       <label for="lname">Last Name</label>
-      <input type="text" class="form-control" placeholder="last name" id="lname" name="lname" value="Shaper">
+      <input type="text" class="form-control" placeholder="last name" id="lname" name="lname" >
     </div> 
   </div>
   <div class="row">

@@ -54,6 +54,8 @@ $elementsArr = [
 		"value"=>"999.999.9999",
 		"regex"=>"phone"
   ],
+
+  
   "state"=>[
     "type"=>"select",
     "options"=>["mi"=>"Michigan","oh"=>"Ohio","pa"=>"Pennslyvania","tx"=>"Texas"],
@@ -141,7 +143,8 @@ $form = <<<HTML
       <label for="phone">Phone (format 999.999.9999) {$elementsArr['phone']['errorOutput']}</label>
       <input type="text" class="form-control" id="phone" name="phone" value="{$elementsArr['phone']['value']}" >
     </div>
-    
+
+            
     <div class="form-group">
       <label for="state">State</label>
       <select class="form-control" id="state" name="state">

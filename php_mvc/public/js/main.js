@@ -115,7 +115,7 @@ crud.updateDeleteList = function(e){
 
 
 /* I WROTE ONE SEND REQUEST TO SEND A REQUEST FOR ALL THE AJAX RELATED OPERATIONS.  BASED UPON WHAT WAS RETURNED DETERMINED WHAT WAS DONE. */
-crud.sendRequest = function(data, specificAction){
+crud.sendRequest = function(data){
 	var xhttp = new XMLHttpRequest(), response, inputs, i;
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {

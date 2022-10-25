@@ -1,9 +1,8 @@
 <?php
-
 class MyClass {
     private function getGreeting() {
         return "Hello, World!";
-}
+    }
     public function hello() {
         echo $this->getGreeting();
     }

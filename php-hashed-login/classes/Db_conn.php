@@ -8,10 +8,15 @@ class DatabaseConn {
 
     try {
 
+      //$dbHost = 'localhost';
+      //$dbName = 'administrator';
+      //$dbUsr = 'root';
+      //$dbPass = 'password';
+
       $dbHost = 'localhost';
-      $dbName = 'administrator';
-      $dbUsr = 'root';
-      $dbPass = 'password';
+      $dbName = 'sshaper';
+      $dbUsr = 'sshaper';
+      $dbPass = 'DFJ64G7FDsEr';
 
       $this->conn = new PDO('mysql:host=' . $dbHost . ';dbname=' . $dbName, $dbUsr, $dbPass);
       $this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false); /*THIS STOPS PDO FROM ADDING SINGLE QUOTES AROUND INTEGER VALUES.*/

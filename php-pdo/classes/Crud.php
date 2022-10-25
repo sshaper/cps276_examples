@@ -34,7 +34,7 @@ class Crud extends PdoMethods{
 		$pdo = new PdoMethods();
 
 		/* HERE I CREATE THE SQL STATEMENT I AM BINDING THE PARAMETERS */
-		$sql = "INSERT INTO short_names (first_name, last_name, eye_color, gender, state) VALUES (:fname, :lname, :eyecolor, :gender, :state)";
+		$sql = "INSERT INTO short_names (first_name, last_name, eye_color, state) VALUES (:fname, :lname, :eyecolor, :state)";
 
 			 
 	    /* THESE BINDINGS ARE LATER INJECTED INTO THE SQL STATEMENT THIS PREVENTS AGAIN SQL INJECTIONS */
@@ -42,7 +42,6 @@ class Crud extends PdoMethods{
 			[':fname',$_POST['fname'],'str'],
 			[':lname',$_POST['lname'],'str'],
 			[':eyecolor',$_POST['color'],'str'],
-			[':gender',$_POST['gender'],'str'],
 			[':state',$_POST['state'],'str']
 		];
 
@@ -67,14 +66,13 @@ class Crud extends PdoMethods{
 				$pdo = new PdoMethods();
 
 				/* HERE I CREATE THE SQL STATEMENT I AM BINDING THE PARAMETERS */
-				$sql = "UPDATE short_names SET first_name = :fname, last_name = :lname, eye_color = :eyecolor, gender = :gender, state = :state WHERE id = :id";
+				$sql = "UPDATE short_names SET first_name = :fname, last_name = :lname, eye_color = :eyecolor, state = :state WHERE id = :id";
 
 				//THE ^^ WAS USED TO MAKE EACH ITEM UNIQUE BY COMBINING FNAME WITH THEY ID
 				$bindings = [
 					[':fname', $post["fname^^{$id}"], 'str'],
 					[':lname', $post["lname^^{$id}"], 'str'],
 					[':eyecolor', $post["color^^{$id}"], 'str'],
-					[':gender', $post["gender^^{$id}"], 'str'],
 					[':state', $post["state^^{$id}"], 'str'],
 					[':id', $id, 'str']
 				];
@@ -137,7 +135,7 @@ class Crud extends PdoMethods{
 	private function createList($records){
 		$list = '<ol>';
 		foreach ($records as $row){
-			$list .= "<li>Name: {$row['first_name']} {$row['last_name']} - Eye Color: {$row['eye_color']} - Gender: {$row['gender']} - State: {$row['state']}</li>";
+			$list .= "<li>Name: {$row['first_name']} {$row['last_name']} - Eye Color: {$row['eye_color']} - State: {$row['state']}</li>";
 		}
 		$list .= '</ol>';
 		return $list;
@@ -149,7 +147,7 @@ class Crud extends PdoMethods{
 		$output .= "<input class='btn btn-success' type='submit' name='update' value='Update'>";
 		$output .= "<input class='btn btn-danger' type='submit' name='delete' value='Delete'>";
 		$output .= "<table class='table table-bordered table-striped'><thead><tr>";
-		$output .= "<th>First Name</th><th>Last Name</th><th>Eye Color</th><th>Gender</th><th>State</th><th>Update/Delete</th><tbody>";
+		$output .= "<th>First Name</th><th>Last Name</th><th>Eye Color</th><th>State</th><th>Update/Delete</th><tbody>";
 		foreach ($records as $row){
 			$output .= "<tr><td><input type='text' class='form-control' name='fname^^{$row['id']}' value='{$row['first_name']}'></td>";
 
@@ -157,8 +155,7 @@ class Crud extends PdoMethods{
 
 			$output .= "<td><input type='text' class='form-control' name='color^^{$row['id']}' value='{$row['eye_color']}'></td>";
 
-			$output .= "<td><input type='text' class='form-control' name='gender^^{$row['id']}' value='{$row['gender']}'></td>";
-
+			
 			$output .= "<td><input type='text' class='form-control' name='state^^{$row['id']}' value='{$row['state']}'></td>";
 
 			$output .= "<td><input type='checkbox' name='inputDeleteChk[]' value='{$row['id']}'></td></tr>";

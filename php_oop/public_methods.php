@@ -21,7 +21,7 @@ class MyClass2 {
 }
 
 $obj2 = new MyClass2;
-echo $obj2->hello();
+echo $obj2->hello()." Hello Class";
 
 
 

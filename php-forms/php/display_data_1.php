@@ -37,7 +37,6 @@ HTML;
   <body>
     <main class="container">
       <h1>Membership Form</h1>
-      <p>Thanks for choosing to join The Widget Club. To register, please fill in your details below and click Send Details.</p>
       <p>The information that has been sent to the server is displayed below.</p>
             <?php echo $output; ?>
     </main>

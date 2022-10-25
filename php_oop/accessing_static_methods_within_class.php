@@ -8,11 +8,11 @@ class Car {
 
     //TO ACCESS PUBLIC METHODS YOU USE THE 'SELF' KEYWORD NOT 'THIS'
     public static function displayMpg( $miles, $gallons ) {
-        echo "This car’s MPG is: " . self::calcMpg( $miles, $gallons );
+        echo "This car's MPG is: " . self::calcMpg( $miles, $gallons );
     }
 }
-    
-echo Car::displayMpg( 168, 6 );
+
+Car::displayMpg( 168, 6 );
 
 
     

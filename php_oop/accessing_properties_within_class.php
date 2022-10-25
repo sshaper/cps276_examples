@@ -5,7 +5,6 @@ class MyClass {
     public function hello() {
         return $this->greeting;
     }
-    
 }
 
 

@@ -1,6 +1,6 @@
 <?php
 class Page {
-	private $base = "http://198.199.80.235/cps276/cps276_examples/php_mvc/";
+	private $base = "https://russet-v8.wccnet.edu/~sshaper/cps276_examples/php_mvc/";
 
   public function nav(){
 		$nav = <<<NAV

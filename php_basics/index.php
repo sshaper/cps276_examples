@@ -1,21 +1,10 @@
 <?php
-class Person {
-    private $_firstName;
-    private $_lastName;
-    private $_age;
-    public function __construct( $firstName, $lastName, $age ) {
-    $this->_firstName = $firstName;
-    $this->_lastName = $lastName;
-    $this->_age = $age;
-    }
-    public function __construct($firstName){
-        $this->_firstName = $firstName;
-    }
+$arr = [1,2,3,4];
 
-    public function showDetails() {
-    echo "$this->_firstName $this->_lastName, age $this->_age<br>";
-    }
-    }
+print_r($arr);
+
+
+
 ?>
 
 
@@ -25,9 +14,9 @@ class Person {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP Basics</title>
+    <title>Document</title>
 </head>
 <body>
-    
+    <p><?php echo $hello;  ?></p>
 </body>
 </html>

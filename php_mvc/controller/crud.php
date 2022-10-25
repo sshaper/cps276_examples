@@ -1,5 +1,5 @@
 <?php
-require_once '/var/www/html/cps276/cps276_examples/php_mvc/classes/Pdo_methods.php';
+require_once 'classes/Pdo_methods.php';
 
 
 /* THIS FUNCTION WILL GET ALL THE NAMES FROM THE DATABASE, BUT (DEPENDING ON WHAT ARGUMENT IS SENT) IT WILL EITHER DISPLAY THE LIST AS A UNORDERED LIST. OR RETURN THE LIST WHERE EACH PART IS IN AN INPUT FIELD FOR EDITING */
@@ -35,7 +35,7 @@ function getNames($type){
 function createList($records){
 	$list = '<ol>';
 	foreach ($records as $row){
-		$list .= "<li>Name: {$row['first_name']} {$row['last_name']} - Eye Color: {$row['eye_color']} - Gender: {$row['gender']} - State: {$row['state']}</li>";
+		$list .= "<li>Name: {$row['first_name']} {$row['last_name']} - Eye Color: {$row['eye_color']} - State: {$row['state']}</li>";
 	}
 	$list .= '</ol>';
 	return $list;
@@ -43,13 +43,13 @@ function createList($records){
 
 /*THIS FUNCTION TAKES THE DATA AND RETURNS THE DATA IN INPUT ELEMENTS SO IT CAN BE EDITED.  */
 function createInput($records){
-	$output = "<table class='table table-bordered'><thead><tr><th>First Name</th><th>Last Name</th><th>Eye Color</th><th>Gender</th><th>State</th><th>Update</th><th>Delete</th></thead><tbody>";
+	$output = "<table class='table table-bordered'><thead><tr><th>First Name</th><th>Last Name</th><th>Eye Color</th><th>State</th><th>Update</th><th>Delete</th></thead><tbody>";
 	foreach ($records as $row){
 		
 		$output .= "<tr><td><input type='text' class='form-control' name='fname' value='".$row['first_name']."'></td>";
 		$output .= "<td><input type='text' class='form-control' name='lname' value='{$row['last_name']}'></td>";
 		$output .= "<td><input type='text' class='form-control' name='color' value='{$row['eye_color']}'></td>";
-		$output .= "<td><input type='text' class='form-control' name='gender' value='{$row['gender']}'></td>";
+		
 		$output .= "<td><input type='text' class='form-control' name='state' value='{$row['state']}'></td>";
 		$output .= "<td><input type='button' class='btn btn-success' id='u{$row['id']}' value='Update' ></td>";
 		$output .= "<td><input type='button' class='btn btn-danger' id='d{$row['id']}' value='Delete' ></td></tr>";
@@ -65,14 +65,13 @@ function addName($dataObj){
 	$pdo = new PdoMethods();
 
 	/* HERE I CREATE THE SQL STATEMENT BUT USE :FIELDNAME */
-	$sql = "INSERT INTO short_names (first_name, last_name, eye_color, gender, state) VALUES (:fname, :lname, :eyecolor, :gender, :state)";
+	$sql = "INSERT INTO short_names (first_name, last_name, eye_color, state) VALUES (:fname, :lname, :eyecolor, :state)";
     
     /* THESE BINDINGS ARE LATER INJECTED INTO THE SQL STATEMENT THIS PREVENTS AGAIN SQL INJECTIONS */
     $bindings = array(
 		array(':fname',$dataObj->fname,'str'),
 		array(':lname',$dataObj->lname,'str'),
 		array(':eyecolor',$dataObj->color,'str'),
-		array(':gender',$dataObj->gender,'str'),
 		array(':state',$dataObj->state,'str')
 	);
 
@@ -100,12 +99,11 @@ function addName($dataObj){
 /* THIS FUNCTION WILL UPDATE THE NAME AND OTHER INFORMAITON FOR THE ROW THAT WAS CLICKED */
 function updateName($dataObj){
 	$pdo = new PdoMethods();
-	$sql = "UPDATE short_names SET first_name = :fname, last_name = :lname, eye_color = :eyecolor, gender = :gender, state = :state WHERE id = :id";
+	$sql = "UPDATE short_names SET first_name = :fname, last_name = :lname, eye_color = :eyecolor, state = :state WHERE id = :id";
 	$bindings = array(
 		array(':fname',$dataObj->fname,'str'),
 		array(':lname',$dataObj->lname,'str'),
 		array(':eyecolor',$dataObj->color,'str'),
-		array(':gender',$dataObj->gender,'str'),
 		array(':state',$dataObj->state,'str'),
 		array(':id',$dataObj->id,'int')		
 	);

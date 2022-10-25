@@ -11,5 +11,6 @@ switch($page){
 	case "homePage" : require_once 'controller/pages.php'; $pageData = homePage(); break;
 	case "addNamePage" : require_once 'controller/pages.php'; $pageData = addNamePage(); break;
 	case "updateDeleteNamePage" : require_once 'controller/pages.php'; $pageData = updateDeleteNamePage(); break;
+	case "scott" : require_once 'controller/pages.php'; $pageData = scottPage(); break;
 	default : require_once 'controller/pages.php'; $pageData = homePage(); break;
 }

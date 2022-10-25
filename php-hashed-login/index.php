@@ -3,15 +3,22 @@ require_once 'classes/Page.php';
 $page = new Page();
 echo $page->head("Encrypted Login - Login Page");
 
+//echo password_hash('password', PASSWORD_DEFAULT);
+
+
 $output = "";
 
 if(isset($_POST['login'])){
   require_once 'classes/Admin.php';
   $admin = new Admin();
   $output = $admin->login($_POST);
+  echo $output;
   if($output === 'success'){
+   
     header('Location: home.php');
   }
+
+
 }
 
 ?>

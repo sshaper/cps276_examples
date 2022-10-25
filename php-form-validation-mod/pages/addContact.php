@@ -54,8 +54,7 @@ $elementsArr = [
 		"value"=>"999.999.9999",
 		"regex"=>"phone"
   ],
-
-  
+   
   "state"=>[
     "type"=>"select",
     "options"=>["mi"=>"Michigan","oh"=>"Ohio","pa"=>"Pennslyvania","tx"=>"Texas"],

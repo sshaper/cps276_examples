@@ -20,10 +20,10 @@ echo $beetle->manufacturer."<br>";
 echo $mustang->color."<br>";
 echo $mustang->manufacturer."<br>";
 
-
+echo "<pre>";
 print_r($beetle);
+echo "<br>";
 print_r($mustang);
 
-
-
 ?>
+

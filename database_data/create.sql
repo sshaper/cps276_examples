@@ -4,9 +4,9 @@
 # Example table creation scripts
 ########################################
 
-CREATE DATABASE IF NOT EXISTS sampledata;
+#CREATE DATABASE IF NOT EXISTS sampledata;
 
-USE sampledata;
+#USE sampledata;
 
 
 ########################

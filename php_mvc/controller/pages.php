@@ -14,6 +14,18 @@ function homePage(){
 	return $pageData;
 }
 
+function scottPage(){
+	//$nameList = getNames('list');
+	$page = new Page();
+
+	$pageData['title'] = "Scott Page";
+	$pageData['heading'] = "Scott Page";
+	$pageData['nav'] = $page->nav();
+	$pageData['content'] = 'Scotts Home Page';
+	$pageData['js'] = "";
+	return $pageData;
+}
+
 function addNamePage(){
 	$page = new Page();
 

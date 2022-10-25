@@ -19,7 +19,7 @@ class Test2 extends MyClass {
 }
 
     //USES THE PARENT CLASS AND ITS OWN CONTRUCTOR
-    class Test3 extends MyClass {
+class Test3 extends MyClass {
     function __construct(){
         parent::__construct();
         echo ", Welcome To PHP";

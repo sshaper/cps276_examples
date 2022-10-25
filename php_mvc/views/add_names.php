@@ -21,10 +21,7 @@ $page = <<<HTML
       <label for="color">Eye Color</label>
       <input type="text" class="form-control" placeholder="eye color" id="color" name="color" value="blue">
     </div>
-    <div class="col-md-2">
-      <label for="gener">Gender</label>
-      <input type="text" class="form-control" placeholder="gender" id="gender" name="gender" value="male">
-    </div>
+    
     <div class="col-md-2">
       <label for="state">State</label>
       <input type="text" class="form-control" placeholder="state" id="state" name="state" value="mi">

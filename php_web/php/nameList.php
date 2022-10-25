@@ -1,5 +1,5 @@
 <?php  
-$names = ["Scott","Karen","Mike","Judy","Aaron","Bronson","Brevick"];
+$names = ["Scott","Karen","Mike","Judy","Aaron"];
 
 $output = "<ul>";
 

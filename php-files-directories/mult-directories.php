@@ -61,9 +61,12 @@ if(isset($_POST['remove'])){
           echo "</pre>";  */
                  
           
-          /*THE FOREACH LOOPS THROUGH THE ARRAY RETURNED BY GLOB AND IF THEIR ARE ANY FILES IN THAT ARRAY IT WILL DELETE THEM BY CALLING DELETE FILE AGAIN.  IF THE ARRAY ONLY CONTAINS A DIRECTORY  IT WILL GET THE NEXT CHILD DIRECTORY */
+          /*THE FOREACH LOOPS THROUGH THE ARRAY RETURNED BY GLOB AND IF THERE ARE ANY FILES IN THAT ARRAY IT WILL DELETE THEM BY CALLING DELETE FILE AGAIN.  IF THE ARRAY ONLY CONTAINS A DIRECTORY  IT WILL GET THE NEXT CHILD DIRECTORY */
+          $count = 0;
           foreach( $files as $file ){
-            $output .= "file per iteration is - ".$file."<br>";
+            $output .= "file per iteration is - ".$file;
+            $count++;
+            $output .= "  interation count is ".$count."<br>";
             
             /* IF THIS IS A FILE THEN REMOVE IT OTHERWISE CHECK FOR ANOTHER SUB DIRECTORY AND IT BECOMES TARGET 
 

@@ -78,8 +78,10 @@ $elementsArr = [
 /*THIS FUNCTION CAN BE CALLED TO ADD DATA TO THE DATABASE */
 function addData(){
   global $elementsArr;  
-  /* IF EVERYTHING WORKS ADD THE DATA HERE TO THE DATABASE HERE USING THE $_POST SUPER GLOBAL ARRAY */
-      print_r($_POST);
+  /* IF EVERYTHING WORKS ADD THE DATA TO A DATABASE TABLE USING THE $_POST SUPER GLOBAL ARRAY */
+  echo "This information would be added to the database table<pre> ";    
+  print_r($_POST);
+  echo "</pre>";
     
       /*ONCE THE DATA HAS BEEN ADDED THE RETURN STATEMENT WILL FIRE.  */
 
@@ -87,13 +89,13 @@ function addData(){
 }
    
 
-/*THIS IS THEGET FROM FUCTION WHICH WILL BUILD THE FORM BASED UPON UPON THE (UNMODIFIED OF MODIFIED) ELEMENTS ARRAY. */
+/*THIS IS THE GET FORM FUCTION WHICH WILL BUILD THE FORM BASED UPON UPON THE (UNMODIFIED OR MODIFIED) ELEMENTS ARRAY. */
 function getForm($acknowledgement, $elementsArr){
 
 global $stickyForm;
 $options = $stickyForm->createOptions($elementsArr['state']);
 
-/* THIS IS A HEREDOC STRING WHICH CREATES THE FORM AND ADD THE APPROPRIATE VALUES AND ERROR MESSAGES */
+/* THIS IS A HEREDOC STRING WHICH CREATES THE FORM AND ADDS THE APPROPRIATE VALUES AND ERROR MESSAGES */
 $form = <<<HTML
     <form method="post" action="index.php">
     <div class="form-group">

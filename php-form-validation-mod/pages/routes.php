@@ -31,13 +31,11 @@ if(isset($_GET)){
     }
 
     else {
-        //header('Location: http://russet.php?page=form');
         header('location: '.$path);
     }
 }
 
 else {
-    //header('Location: http://198.199.80.235/cps276/cps276_assignments/assignment10_final_project/solution/index.php?page=form');
     header('location: '.$path);
 }
 

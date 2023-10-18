@@ -74,6 +74,8 @@
           /* I USE JSON.PARSE TO COVERT THE JSON STRING INTO A JSON OBJECT */
           let json = JSON.parse(res.responseText);
 
+          //console.log(res.responseText);
+
           /* THIS CHECKS THE MASTER STATUS.  IF SUCCESS THEN IT DISPLAYS THE DATA RETURNED FROMT THE SERVER, IN THIS CASE THERE IS NO MASTERSTATUS = ERROR, BUT IF THERE WAS WE COULD THEN WRITE AN ERROR MESSAGE. */
           if(json.masterstatus == "success"){
             Util.getEl('#response')[0].innerHTML = json.resp;

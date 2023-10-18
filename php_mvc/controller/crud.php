@@ -1,5 +1,5 @@
 <?php
-require_once 'classes/Pdo_methods.php';
+require_once '/home/s/s/sshaper/public_html/cps276_examples/php_mvc/classes/Pdo_methods.php';
 
 
 /* THIS FUNCTION WILL GET ALL THE NAMES FROM THE DATABASE, BUT (DEPENDING ON WHAT ARGUMENT IS SENT) IT WILL EITHER DISPLAY THE LIST AS A UNORDERED LIST. OR RETURN THE LIST WHERE EACH PART IS IN AN INPUT FIELD FOR EDITING */
@@ -89,7 +89,7 @@ function addName($dataObj){
 	else {
 		$response = (object) [
 	    	'masterstatus' => 'success',
-	    	'msg' => 'Name has been added',
+	    	'msg' => 'Name has been added and form has been cleared',
 	    	'specificaction' => 'clearform'
 		];
 		echo json_encode($response);

@@ -140,6 +140,7 @@ class Crud extends PdoMethods{
 		$list .= '</ol>';
 		return $list;
 	}
+	
 
 	/*THIS FUNCTION TAKES THE DATA AND RETURNS THE DATA IN INPUT ELEMENTS SO IT CAN BE EDITED.  */
 	private function createInput($records){

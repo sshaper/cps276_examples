@@ -38,6 +38,8 @@ main.processForm = function(){
 		i++;
 	}
 	var data = JSON.stringify(obj);
+
+	
 	var xhttp = new XMLHttpRequest();
 
 	/* SEND THE OBJECT TO THE BACKEND PHP FILE */
@@ -51,6 +53,7 @@ main.processForm = function(){
 			/* IF AN OBJECT IS RETURNED THEN THE DISPLAY ERRORS FUNCTION WILL DISPLAY THE ERRORS. */
 			else{
 				main.displayError(JSON.parse(this.responseText));
+				//console.log(this.responseText);
 			}
 			
 		}

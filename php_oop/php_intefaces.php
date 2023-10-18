@@ -53,8 +53,10 @@ class Cat extends Animal implements Characteristics{
 
 /*NOTICE THE DESCRIBE HERE IS DIFFERENT THAN THAT OF THE DOG CLASS. WE CAN DO THIS BECAUSE WE ARE USING INTEFACES AND THE CLASS DESCRIBES WHAT THE METHOD WILL DO. SO EACH CLASS DOG AND CAT HAVE A DIFFERENT FUNCTION FOR THE DESCRIBE METHOD.*/
     public function describe(){
+        
         return "<p>This animal has {$this->getLegs()} legs and {$this->getWings()} wings and makes a {$this->sound()} sound</p>";
     }
+
 }
 
 

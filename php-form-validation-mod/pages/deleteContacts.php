@@ -49,7 +49,7 @@ function init(){
         <th>State</th>
         <th>Financial</th>
         <th>Eye Color</th>
-        <th>Email</th>
+        <th>Delete</th>
         </tr>
     </thead><tbody>";
 

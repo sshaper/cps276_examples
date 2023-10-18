@@ -28,7 +28,7 @@ crud.addName = function(){
 	while(i < inputs.length){
 		name = inputs[i].name;
 
-		console.log(inputs[i].value);
+		//console.log(inputs[i].value);
 
 		//IF ANY VALUE IS EMPTY THEN STOP THE LOOP AND CALL THE DISPLAY ERRORS FUNCTION
 		if(inputs[i].value == ""){
@@ -103,7 +103,7 @@ crud.updateDeleteList = function(e){
 		data.flag = 'update';
 		node = e.target.parentNode.previousElementSibling;
 		i = 0;
-		while(i < 5){
+		while(i < 4){
 			data[node.firstElementChild.name] = node.firstElementChild.value;
 			node = node.previousElementSibling;
 			i++;
@@ -121,6 +121,8 @@ crud.sendRequest = function(data){
 		if (this.readyState == 4 && this.status == 200) {
 			
 			response = JSON.parse(this.responseText);
+			//console.log(this.response);
+			//return
 			
 			/* IF THERE WAS AN ERROR THEN DISPLAY THE ERROR MESSAGE */
 			if(response.masterstatus === 'error'){

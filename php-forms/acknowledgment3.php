@@ -1,6 +1,7 @@
 <?php
 
 /*IF THE FNAME WAS SENT I THE WEB ADDRESS THEN IT IS ASSUMED THE LNAME IS AS WELL, SO I DID NOT CHECK FOR THAT.  IF NAMES ARE SENT DISPLAY THE NAMES*/
+
 if(isset($_GET['fname'])){
 $output = <<<HTML
   <p>{$_GET['fname']} {$_GET['lname']} has successfully been added to our membership.</p>
@@ -10,6 +11,7 @@ HTML;
 else {
   $output = "<p>You have successfully been added to our membership</p>";
 }
+
 
 
 ?>

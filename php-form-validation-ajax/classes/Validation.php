@@ -30,12 +30,15 @@ class Validation{
 
 	/* THE REST OF THE FUNCTIONS ARE THE INDIVIDUAL REGEEX FUNCTIONS*/
 	private function name($obj){
+		//echo $obj['value'];
 		$match = preg_match('/^[a-z-\']{1,50}$/i', $obj['value']);
 		return $this->setMatch($match, $obj);
 	}
 
 	private function address($obj){
-		$match = preg_match('/^\d+([A-Z\s-.])+$/i', $obj['value']);
+		//echo $obj['value'];
+		$match = preg_match('/^\d+([A-Z\s.])+$/i',$obj['value']);
+		//$match = preg_match('/^\d+([A-Z\s-.])+$/i', $obj['value']);
 		return $this->setMatch($match, $obj);
 	}
 

@@ -1,10 +1,11 @@
 <?php
+
 //CREATING A FUNCTION CONTAINING A POTENTIAL EXCEPTION
 function check_num($number) {
     if($number > 1) {
         throw new Exception("The value has to be 1 or lower");
     }
-        $output = "Number is 1 or less";
+    $output = "Number is 1 or less";
 }
 
 try {
@@ -14,6 +15,7 @@ try {
 //CATCHING THE EXCEPTION
 catch(Exception $e) {
     $output = 'Message: ' .$e->getMessage();
+    
 }
 
 

@@ -66,7 +66,7 @@ if(isset($_POST['remove'])){
           foreach( $files as $file ){
             $output .= "file per iteration is - ".$file;
             $count++;
-            $output .= "  interation count is ".$count."<br>";
+            $output .= "  iteration count is ".$count."<br>";
             
             /* IF THIS IS A FILE THEN REMOVE IT OTHERWISE CHECK FOR ANOTHER SUB DIRECTORY AND IT BECOMES TARGET 
 

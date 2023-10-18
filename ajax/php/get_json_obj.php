@@ -3,10 +3,6 @@
 /* GET THE FILE CONTENTS*/
 $json = file_get_contents('../data/books.txt');
 
-
-
-
-
 /* IF THERE IS A PROBLEM GETTING THE FILE CONTENTS THEN CREATE AN OBJECT AND SEND THE ERROR MESSAGE TO THE BROWSER*/
 if(!$json){
 	$response = (object) [

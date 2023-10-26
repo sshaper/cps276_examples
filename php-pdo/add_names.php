@@ -3,13 +3,7 @@ require_once 'classes/Page.php';
 require_once 'classes/Crud.php';
 $page = new Page();
 $crud = new Crud();
-
-$output = "";
-
-if(isset($_POST['addName'])){
-  $output = $crud->addName();
-}
-
+$output = $crud->init();
 
 ?>
 <!DOCTYPE html>

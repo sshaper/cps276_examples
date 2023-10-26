@@ -3,15 +3,7 @@ require_once 'classes/Page.php';
 require_once 'classes/Crud.php';
 $page = new Page();
 $crud = new Crud();
-
-$output = "";
-
-if(isset($_POST['update'])){
-  $output = $crud->updateNames($_POST);
-}
-else if(isset($_POST['delete'])){
-  $output = $crud->deleteNames($_POST);
-}
+$output = $crud->init();
 
 
 ?>

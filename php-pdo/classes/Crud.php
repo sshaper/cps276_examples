@@ -3,6 +3,36 @@ require 'Pdo_methods.php';
 
 class Crud extends PdoMethods{
 
+	public function init(){
+	
+	/* I WANTED TO USE THE SWITCH STATEMENT INSTEAD OF IF ELSE BUT IT ERROR ON THE OTHER POST ARRAY NAMES.  FOR EXAMPLE IF I CLICKED ADD NAME IT WOULD ALSO LOOK FOR $_POST['update'] AND $_POST['delete']
+
+		if(count($_POST) > 0){
+			switch($_POST){
+				case $_POST['addName']: return $crud->addName(); break;
+				case $_POST['update']: return $crud->updateNames($_POST); break;
+				case $_POST['delete']: return $crud->deleteNames($_POST); break;
+				default: return "";
+			}
+		}	*/		
+		
+		if(count($_POST) > 0){
+
+			if(isset($_POST['addName'])){
+				return $this->addName();
+			}
+
+			else if(isset($_POST['update'])){
+				return $this->updateNames($_POST);
+			}
+			else if(isset($_POST['delete'])){
+				return $this->deleteNames($_POST);
+			}
+		}
+	}
+
+	
+	//THIS HAS TO BE PUBLIC BECAUSE INDEX.PHP AND UPDATE_DELETE_NAMES.PHP BOTH CALL IT DIRECTLY
 	public function getNames($type){
 		
 		/* CREATE AN INSTANCE OF THE PDOMETHODS CLASS*/
@@ -29,7 +59,11 @@ class Crud extends PdoMethods{
 		}
 	}
 
-	public function addName(){
+
+	/***** THE REST OF THESE METHODS CAN BE PRIVATE BECAUSE THEY ARE CALLED WITHIN THE CLASS. */
+
+
+	private function addName(){
 	
 		$pdo = new PdoMethods();
 
@@ -57,7 +91,7 @@ class Crud extends PdoMethods{
 		}
 	}
 
-	public function updateNames($post){
+	private function updateNames($post){
 		$error = false;
 
 		if(isset($post['inputDeleteChk'])){
@@ -98,7 +132,7 @@ class Crud extends PdoMethods{
 		}
 	}
 
-	public function deleteNames($post){
+	private function deleteNames($post){
 		$error = false;
 		if(isset($post['inputDeleteChk'])){
 			foreach($post['inputDeleteChk'] as $id){

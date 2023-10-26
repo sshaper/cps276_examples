@@ -16,6 +16,7 @@ class Crud extends PdoMethods{
 			}
 		}	*/		
 		
+		//THIS CHECKS TO SEE IF THE POST SUPER GLOBAL ARRAY HAS ANYTHING THEN IT CHECKS WHAT BUTTON WAS CLICKED AND RUNS THE REQUIRED METHOD.  IF NO BUTTON WAS CLICKED THEN IT RETURNS AN EMPTY STRING SO OUTPUT IS BLANK.
 		if(count($_POST) > 0){
 
 			if(isset($_POST['addName'])){
@@ -27,6 +28,9 @@ class Crud extends PdoMethods{
 			}
 			else if(isset($_POST['delete'])){
 				return $this->deleteNames($_POST);
+			}
+			else {
+				return "";
 			}
 		}
 	}
@@ -102,7 +106,7 @@ class Crud extends PdoMethods{
 				/* HERE I CREATE THE SQL STATEMENT I AM BINDING THE PARAMETERS */
 				$sql = "UPDATE short_names SET first_name = :fname, last_name = :lname, eye_color = :eyecolor, state = :state WHERE id = :id";
 
-				//THE ^^ WAS USED TO MAKE EACH ITEM UNIQUE BY COMBINING FNAME WITH THEY ID
+				//THE ^^ WAS USED TO MAKE EACH ITEM UNIQUE BY COMBINING FNAME WITH THE ID
 				$bindings = [
 					[':fname', $post["fname^^{$id}"], 'str'],
 					[':lname', $post["lname^^{$id}"], 'str'],

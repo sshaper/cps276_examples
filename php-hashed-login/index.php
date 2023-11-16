@@ -1,27 +1,27 @@
 <?php
-require_once 'classes/Page.php';
-$page = new Page();
-echo $page->head("Encrypted Login - Login Page");
 
-//echo password_hash('password', PASSWORD_DEFAULT);
-
-
-$output = "";
-
-if(isset($_POST['login'])){
+$output="";
+if(count($_POST) > 0){
   require_once 'classes/Admin.php';
   $admin = new Admin();
-  $output = $admin->login($_POST);
-  echo $output;
-  if($output === 'success'){
-   
-    header('Location: home.php');
-  }
-
-
+  //BECAUSE THERE ARE DIFFERENT PAGES I SENT A PAGE NAME SO THE SCRIPT KNOW WHAT METHOD TO RUN
+  $output = $admin->init("index");
 }
 
 ?>
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>Hashed Login</title>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link href="public/css/main.css" rel="stylesheet">
+      </head>
   <body>
     <div class="container">
       <h1>Login Page</h1>
@@ -56,9 +56,6 @@ if(isset($_POST['login'])){
       </div>
       </form>
 
-
-
     </div>
-
   </body>
 </html>

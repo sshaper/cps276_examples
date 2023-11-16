@@ -3,29 +3,64 @@ require_once 'classes/Pdo_methods.php';
 
 class Admin extends PdoMethods {
 
-	public function login($post){
+	public function init($page) {
+		if($page == "index"){
+			return $this->login();
+		}
+		else if($page == "home"){
+			//SECURITY RETURNS TRUE IF USER HAS ACCESS TO PAGE
+			if($this->security()){
+				return $this->displayUsernamePassword();
+			}
+			
+		}
+		else if($page == "addAdmin"){
+			//SECURITY RETURNS TRUE IF USER HAS ACCESS TO PAGE
+			if($this->security()){
+				//IF THE ADDADMIN BUTTON IS CLICKED THEN RUN THE ADDADMIN METHOD
+				if(isset($_POST['addAdmin'])){
+					return $this->addAdmin();
+				}
+			}
+
+		}
+	}
+
+	//BECAUSE THE HOME, ADDADMIN, AND LOGOUT PAGES ARE BY ACCESS ONLY WE HAVE TO RUN THE SECURITY SCRIPT FIRST.
+	private function security(){
+		session_start();
+		if($_SESSION['access'] !== "accessGranted"){
+		  header('location: index.php');
+		}
+		else {
+			return true;
+		}
+		
+	}
+	
+	private function login(){
 	   
 	    $pdo = new PdoMethods();
 	    $sql = "SELECT username, password FROM admin WHERE username = :username";
-		$bindings = array(
-			array(':username', $post['username'], 'str')
-		);
-
-	    $records = $pdo->selectBinded($sql, $bindings);
+		
+		$bindings = [
+			[':username', $_POST['username'], 'str']
+		];
+		
+		$records = $pdo->selectBinded($sql, $bindings);
 
 		/** IF THERE WAS AN RETURN ERROR STRING */
 		if($records == 'error'){
 			return "There was an error logging it";
 		}
 		
-		/** */
 		else{
 			if(count($records) != 0){
 	            /** IF THE PASSWORD IS NOT VERIFIED USING PASSWORD_VERIFY THEN RETURN FAILED, OTHERWISE RETURN SUCCESS, IF NO RECORDS ARE FOUND RETURN NO RECORDS FOUND. */
-	            if(password_verify($post['password'], $records[0]['password'])){
+	            if(password_verify($_POST['password'], $records[0]['password'])){
 	                session_start();
 	                $_SESSION['access'] = "accessGranted";
-	                return "success";
+	                header("location: home.php");
 	            }
 	            else {
 	                return "There was a problem logging in with those credentials";
@@ -37,13 +72,19 @@ class Admin extends PdoMethods {
 		}
 	}
 
-	public function addAdmin($post){
+	private function addAdmin(){
 	    $pdo = new PdoMethods();
-	    $sql = "SELECT username FROM admin WHERE username = :username";
-		$bindings = array(
-			array(':username', $post['username'], 'str')
-		);
 
+		if($_POST['username'] == "" || $_POST['password'] == ""){
+			return "You must enter a username and password";
+		}
+
+	    $sql = "SELECT username FROM admin WHERE username = :username";
+		
+		$bindings =  [
+			[':username', $_POST['username'], 'str']
+		];
+		
 	    $records = $pdo->selectBinded($sql, $bindings);
 
 		/** IF THERE WAS AN RETURN ERROR STRING */
@@ -58,14 +99,16 @@ class Admin extends PdoMethods {
 			}
 			else {
 				/** ENCRYPT THE PASSWORD USING PASSWORD_HASH */
-				$password = password_hash($post['password'], PASSWORD_DEFAULT);
+				$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
 
 				$sql = "INSERT INTO admin (username, password) VALUES (:username, :password)";
-				$bindings = array(
-					array(':username',$post['username'],'str'),
-					array(':password',$password,'str')
-				);
+
+				$bindings = [
+					[':username', $_POST['username'], 'str'],
+					[':password', $password, 'str']
+				];
+				
 				$result = $pdo->otherBinded($sql, $bindings);
 				if($result = 'noerror'){
 					return 'Admin added';
@@ -77,7 +120,7 @@ class Admin extends PdoMethods {
 		}
 	}
 
-	public function displayUsernamePassword(){
+	private function displayUsernamePassword(){
 		$pdo = new PdoMethods();
 		$sql = "SELECT username, password FROM admin";
 		$records = $pdo->selectNotBinded($sql);
@@ -91,16 +134,16 @@ class Admin extends PdoMethods {
 		/** IF USERNAMES AND PASSWORDS ARE FOUND DISPLAY THEM OTHERWISE DISPLAY NO RECORDS FOUND MESSAGE */
 		else{
 		    if(count($records) != 0){
-		        $result = '<ul>';
+		        $result = "<ul>";
 		        foreach($records as $row){
-		            $result .= "<li>" .$row['username'] . " -- " . $row['password'] . "</li>";
+		            $result .= "<li>{$row['username']} -- {$row['password']}</li>";
 		        }
 		        $result .= "</ul>";
 
 		        return $result;
 		    }
 		    else {
-		        return 'No records found';
+		        return "No records found";
 		    }
 		}
 	}

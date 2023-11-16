@@ -53,12 +53,14 @@ function saveInfo(){
     var arr, json;
     /* IF EVERYTING IS OKAY THEN DISPLAY THE RESULT */
     if (this.readyState == 4 && this.status == 200) {
+      
+      console.log(this.responseText);
       arr = this.responseText.split("^^^");
       
       if(arr[0] == 'success'){
         json = JSON.parse(arr[1]);
         console.log(json[0]);
-        document.getElementById("result").innerHTML = "Here is the <a href='" + json[0].filepath + "'>" + json[0].filename + "</a>";
+        document.getElementById("result").innerHTML = "Here is the <a target='_blank' href='" + json[0].filepath + "'>" + json[0].filename + "</a>";
 
       }
       else{

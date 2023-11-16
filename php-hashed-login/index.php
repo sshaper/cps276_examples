@@ -1,12 +1,12 @@
 <?php
 
 $output="";
-if(count($_POST) > 0){
-  require_once 'classes/Admin.php';
-  $admin = new Admin();
-  //BECAUSE THERE ARE DIFFERENT PAGES I SENT A PAGE NAME SO THE SCRIPT KNOW WHAT METHOD TO RUN
-  $output = $admin->init("index");
-}
+
+require_once 'classes/Admin.php';
+$admin = new Admin();
+//BECAUSE THERE ARE DIFFERENT PAGES I SENT A PAGE NAME SO THE SCRIPT KNOW WHAT METHOD TO RUN
+$output = $admin->init("index");
+
 
 ?>
 <!DOCTYPE html>

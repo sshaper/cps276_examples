@@ -5,7 +5,9 @@ class Admin extends PdoMethods {
 
 	public function init($page) {
 		if($page == "index"){
-			return $this->login();
+			if(isset($_POST['login'])){
+				return $this->login();
+			}
 		}
 		else if($page == "home"){
 			//SECURITY RETURNS TRUE IF USER HAS ACCESS TO PAGE

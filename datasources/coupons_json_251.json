@@ -1,0 +1,74 @@
+{
+  "coupons": [
+    {
+      "store": "Ebay",
+      "coupon": "Get upto 20% off on hand bags",
+      "expiryDate": "10/10/2016",
+      "couponCode": "ER4",
+      "category": "fashion"
+    },
+    {
+      "store": "Amazon",
+      "coupon": "Get upto 5% off on mobile phones",
+      "expiryDate": "11/11/2016",
+      "couponCode": "TRG4",
+      "category": "electronics"
+    },
+    {
+      "store": "Etsy",
+      "coupon": "Get upto 25% off on jeans",
+      "expiryDate": "09/09/2016",
+      "couponCode": "ERT4",
+      "category": "fashion"
+    },
+    {
+      "store": "BestBuy",
+      "coupon": "Get upto 30% off on televisions",
+      "expiryDate": "11/20/2016",
+      "couponCode": "343",
+      "category": "electronics"
+    },
+    {
+      "store": "Meijer",
+      "coupon": "Get upto 50% off on home and kitchen",
+      "expiryDate": "11/10/2016",
+      "couponCode": "ER3",
+      "category": "home"
+    },
+    {
+      "store": "Walmart",
+      "coupon": "Get upto 10% off on baby products",
+      "expiryDate": "09/17/2016",
+      "couponCode": "we33",
+      "category": "baby"
+    },
+    {
+      "store": "Kohls",
+      "coupon": "Get upto 22% off on kids fashion",
+      "expiryDate": "08/21/2016",
+      "couponCode": "err4",
+      "category": "kids fashion"
+    },
+    {
+      "store": "Macys",
+      "coupon": "Get upto 19% off on fashion",
+      "expiryDate": "10/12/2016",
+      "couponCode": "DSF3",
+      "category": "fashion"
+    },
+    {
+      "store": "JCPenney",
+      "coupon": "Get upto 10% off on bedsheets",
+      "expiryDate": "11/12/2016",
+      "couponCode": "wew",
+      "category": "home"
+    },
+    {
+      "store": "Wayfair",
+      "coupon": "Get 5% off on everything",
+      "expiryDate": "10/02/2016",
+      "couponCode": "233",
+      "category": "all"
+    }
+  ]
+}

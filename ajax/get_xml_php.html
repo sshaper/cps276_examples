@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>AJAX Get XML Example (PHP)</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Get XML Example</h1>
+      <input type="button" class="btn btn-primary" id="getInfo" value="Get XML">
+      <div id="result"></div>
+    </div>
+    <script>
+      document.getElementById('getInfo').addEventListener('click', getInfo, true);
+      function getInfo(){
+        var xhr, xml, books, editions, i = 0, j = 0, list;
+        if (window.XMLHttpRequest) {
+          xhr = new XMLHttpRequest();
+        } else {
+          /*CODE FOR OLDER BROWSERS*/
+          xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xhr.onreadystatechange = function() {
+          /*IF EVERYTING IS OKAY THEN DISPLAY THE RESULT */
+          if (this.readyState == 4 && this.status == 200) {
+            xml = this.responseXML.documentElement;
+            
+            /*PARSE THE XML*/
+            books = xml.getElementsByTagName('book');
+            list = '<ul>';
+            while(i < books.length){
+              list += '<li>' + books[i].getElementsByTagName('title')[0].firstChild.nodeValue;
+              list += ' By ' + books[i].getElementsByTagName('title')[0].getAttribute('author') + '<br>';
+              list += 'Published By <em>' + books[i].getElementsByTagName('publisher')[0].firstChild.nodeValue + '</em><br>Editions:';
+              list += '<ul>';
+
+              editions = books[i].getElementsByTagName('edition');
+              j = 0;
+              while(j < editions.length){
+                list += '<li>' + editions[j].firstChild.nodeValue + " " + editions[j].getAttribute('year') + '</li>';
+                j++;
+              }
+              list += '</ul></li>';
+              i++;
+            }
+            list += '</ul>';
+
+          }
+
+          document.getElementById('result').innerHTML = list;
+        };
+
+
+        
+        /* THIS IS A GET REQUEST IT ONLY GETS INFORMATION IT CANNOT SEND IT */
+        xhr.open("GET", "php/get_xml.php", true);
+        xhr.send();
+      }
+    </script>
+
+  </body>
+</html>

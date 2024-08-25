@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<books>
+	<book>
+	  <title author="Eric Meyer">Eric Meyer on CSS</title>
+	  <publisher>New Riders</publisher>
+	  <editions>
+      <edition year="2002">First Edition</edition>
+    </editions>
+	</book>
+	<book>
+    <title author="Jennifer Niederst">Web Design in a Nutshell</title>
+    <publisher>O&apos;Reilly &amp; Associates</publisher>
+    <editions>
+      <edition year="1999">First Edition</edition>
+      <edition year="2001">Second Edition</edition>
+      <edition year="2006">Third Edition</edition>      
+    </editions>
+  </book>
+  <book>
+  <title author="Douglas Crockford">JavaScript: The Good Parts</title>
+    <publisher>O&apos;Reilly &amp; Associates</publisher>
+    <editions>
+      <edition year="2008">First Edition</edition>
+    </editions>
+  </book>
+</books>

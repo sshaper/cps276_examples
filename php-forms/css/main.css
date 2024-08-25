@@ -1,0 +1,6 @@
+body{font: normal 100%/1.3 Verdana;}
+.error{font-size: .8em; color: #F00;}
+.block{display: block;}
+input[type='text']{font-size: 1em; padding: 3px}
+form {margin: 0 auto; width: 500px}
+form div{margin-top: 10px;}

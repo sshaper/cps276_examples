@@ -5,12 +5,14 @@
 $data = json_decode($_POST['data']);
 
 /* THIS IS WHERE YOU WOULD ADD THE INFORMATION TO AT DATABASE IF THAT IS WHAT YOU NEEDED TO DO, IT IS JUST LIKE YOU HAVE DONE BEFORE.
-EXAMPLE:
+EXAMPLE:*/
+
+require_once '../classes/Pdo_methods.php';
 
 $pdo = new PdoMethods();
 
 //HERE I CREATE THE SQL STATEMENT I AM BINDING THE PARAMETERS 
-$sql = "INSERT INTO names (fname, lname, address, city) VALUES (:fname, :lname, :address, :city)";
+$sql = "INSERT INTO testnames (firstname, lastname, address, city) VALUES (:fname, :lname, :address, :city)";
 
 		
 //THESE BINDINGS ARE LATER INJECTED INTO THE SQL STATEMENT THIS PREVENTS AGAIN SQL INJECTIONS 
@@ -25,20 +27,20 @@ $bindings = [
 $result = $pdo->otherBinded($sql, $bindings);
 
 //HERE I AM RETURNING EITHER AN ERROR STRING OR A SUCCESS STRING 
-if($result === 'error'){
-	$response = (object)[
-	'masterstatus'=>'error',
-	'resp'=>"There was an error entering the name
-];
-}
-else {
-	$response = (object)[
-	'masterstatus'=>'success',
-	'resp'=>"Name has been added".
-];
+	if($result === "error"){
+		$response = (object)[
+		'masterstatus'=>"error",
+		'resp'=>"There was an error entering the name"
+	];
+	}
+	else {
+		$response = (object)[
+		'masterstatus'=>'success',
+		'resp'=>"Name has been added"
+	];
 }
 	
-*/
+
 
 
 

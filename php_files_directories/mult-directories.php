@@ -130,7 +130,7 @@ if(isset($_POST['remove'])){
       <h1>Multiple Directory</h1>
       <p><?php echo $msg; ?></p>
       <p>This example demonstrates how to create and remove multiple directories, sub directories and files.</p>
-      <p>NOTE: In order for this to work the folder this file is in <code>php-directories</code> had to have permissions of 0777.</p>
+      <p>NOTE: In order for this to work the folder this file is in <code>php_files_directories</code> had to have permissions of 0777.</p>
       <form action="mult-directories.php" method="POST">
         <input type="submit" class="btn btn-primary" name="create" value="Create Multiple Directories">
         <input type="submit" class="btn btn-primary" name="remove" value="Remove Multiple Directories">

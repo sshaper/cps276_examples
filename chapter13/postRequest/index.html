@@ -40,7 +40,15 @@
                 },
                 body: JSON.stringify({ name: name, age: age, city: city })
             })
-            .then(response => response.json())
+            .then(response => {
+                // Log the raw text response to the console good for debugging
+                response.clone().text().then(rawText => {
+                    console.log('Raw Text Response:', rawText);
+                });
+
+                // Parse and return the JSON response
+                return response.json();
+            })
             .then(data => {
                 // Display the response from the server
                 var output = `<h2>${data.message}</h2><p>The name is ${data.received.name}, the age is ${data.received.age} and the city is ${data.received.city}`;

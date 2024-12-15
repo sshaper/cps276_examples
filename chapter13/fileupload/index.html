@@ -39,7 +39,17 @@
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
+            
+            .then(response => {
+                // Log the raw text response to the console good for debugging
+                response.clone().text().then(rawText => {
+                    console.log('Raw Text Response:', rawText);
+                });
+
+                // Parse and return the JSON response
+                return response.json();
+            })
+            
             .then(data => {
                 //document.getElementById('responseMessage').innerText = data;
                 if(!data.error){

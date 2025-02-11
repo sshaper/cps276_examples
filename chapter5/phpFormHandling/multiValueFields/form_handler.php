@@ -1,16 +1,28 @@
 <?php
-$output = "";
-$favoriteWidgets = [];
+$output = ""; // Initialize an empty string to store output
+$favoriteWidgets = []; // Initialize an empty array to store selected widgets
+
+// Check if the request method is POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $favoriteWidgets = $_POST['favoriteWidgets'];
     
-    foreach ($favoriteWidgets as $widgets) {
-        $output .= "<p>$widgets</p>";
+    // Check if 'favoriteWidgets' exists in the POST request
+    if(isset($_POST['favoriteWidgets'])){
+        $favoriteWidgets = $_POST['favoriteWidgets']; // Retrieve the selected widgets from POST data
+        
+        // Loop through each selected widget and append it to the output string
+        foreach ($favoriteWidgets as $widgets) {
+            $output .= "<p>$widgets</p>"; // Append each widget in a paragraph element
+        }
     }
-}
+    else {
+        $output = "No widgets selected."; // Handle case where no widgets were selected
+    }
+
+} 
 else {
-    $output = "No widgets sent.";
+    $output = "No post request sent"; // Handle case where request method is not POST
 }
+
 ?>
 
 <!doctype html>

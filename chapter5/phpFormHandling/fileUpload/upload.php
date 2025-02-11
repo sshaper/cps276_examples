@@ -13,21 +13,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($file["size"] > 1000000 || $file["error"] == 1) {
                 $uploadStatus .= "File is too large.";
             } else {
-                // Check MIME type
+                // Get MIME type
                 $fileType = mime_content_type($file["tmp_name"]);
+
+                //If the file type is not a png, jpeg, or gif then display error message.
                 if ($fileType != "image/png" && $fileType != "image/jpeg" && $fileType != "image/gif") {
                     $uploadStatus .= "Only PNG, JPEG, and GIF images are allowed.";
                 } else {
                     // File checks passed
-                    if (move_uploaded_file($file["tmp_name"], "uploads/{$_POST['fileName']}.png")) {
+
+                    //Get the file extention
+                    $fileExt = substr($fileType, 6);
+                    
+                    //Move the file from the temp location to the uploads folder.  Also add the file extention to the name.
+                    if (move_uploaded_file($file["tmp_name"], "uploads/{$_POST['fileName']}.{$fileExt}")) {
                         $uploadStatus .= "File was successfully uploaded.";
+
                         // Display image on webpage
                         $uploadStatus .= "<img src=\"uploads/{$_POST['fileName']}\">";
 
                     } else {
                         $uploadStatus .= "There was a problem uploading your file - please try again.";
                     }
-                    
                 }
             }
         } else {

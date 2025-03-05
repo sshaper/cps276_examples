@@ -45,7 +45,7 @@ if(isset($_POST['remove'])){
       <p><?php echo $msg; ?></p>
       <p>This example demonstrates how to create and remove a single "empty" directory.</p>
       <p>NOTE: In order for this to work the folder this file is in <code>php_files_directories</code> and that directory had to have permissions of 0777.</p>
-      <form action="single-directory.php" method="POST">
+      <form action="single_directory.php" method="POST">
         <input type="submit" class="btn btn-primary" name="create" value="Create Directory">
         <input type="submit" class="btn btn-primary" name="remove" value="Remove Directory">
       </form>

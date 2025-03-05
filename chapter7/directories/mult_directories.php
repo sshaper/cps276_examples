@@ -48,9 +48,6 @@ if(isset($_POST['remove'])){
 
       /* IS_DIR() CHECKS TO SEE IF THE TARGET IS A DIRECTORY,*/
       if(is_dir($target)){
-          
-
-
           /*GLOB RETURNS AN ARRAY CONTAINING THE MATCHED FILES/DIRECTORIES, AN EMPTY ARRAY IF NO FILE MATCHED OR FALSE ON ERROR.  IN THIS CASE GLOB RETURNS AND ARRAY OF ANY SUBFOLDERS OR FILES*/
 
           /*GLOB_MARK ADDS A SLASH TO EACH DIRECTORY. IF A SLASH WAS NOT ADDED THEN THE SUBDIRECTORY NAMES WOULD APPEAR TO BE PART OF THE PARENT DIRECTORY.  IF GLOB_MARK IS REMOVED YOU WILL GET AN INFINITE LOOP.*/
@@ -131,7 +128,7 @@ if(isset($_POST['remove'])){
       <p><?php echo $msg; ?></p>
       <p>This example demonstrates how to create and remove multiple directories, sub directories and files.</p>
       <p>NOTE: In order for this to work the folder this file is in <code>php_files_directories</code> had to have permissions of 0777.</p>
-      <form action="mult-directories.php" method="POST">
+      <form action="mult_directories.php" method="POST">
         <input type="submit" class="btn btn-primary" name="create" value="Create Multiple Directories">
         <input type="submit" class="btn btn-primary" name="remove" value="Remove Multiple Directories">
       </form>

@@ -1,7 +1,14 @@
+/**
+ * Main form handling script
+ * Demonstrates the usage of StickyForm class for form validation and rendering
+ * Includes various form elements like text inputs, select boxes, radio buttons, and checkboxes
+ */
 <?php
 require_once('classes/StickyForm.php');
 
+// Configuration array defining the structure and validation rules for the form
 $formConfig = [
+    // First name field configuration
     'first_name' => [
         'type' => 'text',
         'regex' => 'name',
@@ -13,10 +20,11 @@ $formConfig = [
         'required' => true,
         'value' => ''
     ],
+    // Last name field configuration
     'last_name' => [
         'type' => 'text',
         'regex' => 'name',
-        'label' => 'Last Name',
+        'label' => '*Last Name',
         'name' => 'last_name',
         'id' => 'last_name',
         'errorMsg' => 'You must enter a valid last name.',
@@ -24,6 +32,7 @@ $formConfig = [
         'required' => false,
         'value' => ''
     ],
+    // Address field configuration
     'address' => [
         'type' => 'text',
         'regex' => 'address',
@@ -35,6 +44,7 @@ $formConfig = [
         'required' => false,
         'value' => '123 Anyplace'
     ],
+    // State selection dropdown configuration
     'state' => [
         'type' => 'select',
         'label' => 'State',
@@ -53,6 +63,7 @@ $formConfig = [
             'fl' => 'Florida'
         ]
     ],
+    // Zip code field configuration
     'zip_code' => [
         'type' => 'text',
         'regex' => 'zip',
@@ -64,6 +75,7 @@ $formConfig = [
         'required' => false,
         'value' => '12345'
     ],
+    // Phone number field configuration
     'phone' => [
         'type' => 'text',
         'regex' => 'phone',
@@ -75,6 +87,7 @@ $formConfig = [
         'required' => false,
         'value' => '999.999.9999'
     ],
+    // Email field configuration
     'email' => [
         'type' => 'text',
         'regex' => 'email',
@@ -86,6 +99,7 @@ $formConfig = [
         'required' => false,
         'value' => 'sshaper@wccnet.edu'
     ],
+    // Comments textarea configuration
     'comments' => [
         'type' => 'textarea',
         'regex' => 'none',
@@ -97,6 +111,7 @@ $formConfig = [
         'required' => false,
         'value' => 'Hello Class'
     ],
+    // Radio button group configuration
     'radio_options' => [
         'type' => 'radio',
         'label' => 'Choose an Option',
@@ -112,6 +127,7 @@ $formConfig = [
         ],
         'layout' => 'horizontal'
     ],
+    // Checkbox group configuration
     'checkboxes' => [
         'type' => 'checkbox',
         'label' => 'Select Items',
@@ -130,19 +146,21 @@ $formConfig = [
         'layout' => 'horizontal'
     ],
     
+    // Master status for form validation
     'masterStatus' => [
         'error' => false
     ]
-
 ];
 
-
-// Initialize StickyForm instance
+// Initialize StickyForm instance for form handling
 $stickyForm = new StickyForm();
 
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
+    // Validate form data and update form configuration
     $formConfig = $stickyForm->validateForm($_POST, $formConfig);
+    
+    // Check if form is valid (no errors)
     if (!$stickyForm->hasErrors() && $formConfig['masterStatus']['error'] == false) {
         /*
         If no errors then process the form data
@@ -173,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         If you wanted to get a specific field value (say first name) you would say $_POST['first_name']
  
         */
-        //echo "scott";
+        // Display submitted form data
         echo '<pre>';
         print_r($_POST);
         exit();
@@ -185,68 +203,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Sticky Form Example</title>
+    <!-- Include Bootstrap CSS for styling -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
 
 <div class="container mt-5">
+    <!-- Main form container -->
     <form method="post" action="">
+        <!-- Name fields row -->
         <div class="row">
-            <!-- Render first name field -->
+            <!-- First name field -->
             <div class="col-md-6">
                 <?php echo $stickyForm->renderInput($formConfig['first_name'], 'mb-3'); ?>
             </div>
 
-            <!-- Render last name field -->
+            <!-- Last name field -->
             <div class="col-md-6">
                 <?php echo $stickyForm->renderInput($formConfig['last_name'], 'mb-3'); ?>
             </div>
         </div>
 
-        <!-- Render address field -->
+        <!-- Address field row -->
         <div class="row">
             <div class="col-md-12">
                 <?php echo $stickyForm->renderInput($formConfig['address'], 'mb-3'); ?>
             </div>
         </div>
 
-        <!-- Render zip code, phone, and email fields -->
+        <!-- Contact information row -->
         <div class="row">
-            <!-- Render state select box -->
+            <!-- State selection -->
             <div class="col-md-3">
                 <?php echo $stickyForm->renderSelect($formConfig['state'], 'mb-3'); ?>
             </div>
+            <!-- Zip code field -->
             <div class="col-md-3">
                 <?php echo $stickyForm->renderInput($formConfig['zip_code'], 'mb-3'); ?>
             </div>
+            <!-- Phone field -->
             <div class="col-md-3">
                 <?php echo $stickyForm->renderInput($formConfig['phone'], 'mb-3'); ?>
             </div>
+            <!-- Email field -->
             <div class="col-md-3">
                 <?php echo $stickyForm->renderInput($formConfig['email'], 'mb-3'); ?>
             </div>
         </div>
 
-        <!-- Render comments textarea -->
+        <!-- Comments section -->
         <div class="row">
             <div class="col-md-12">
                 <?php echo $stickyForm->renderTextarea($formConfig['comments'], 'mb-3'); ?>
             </div>
         </div>
 
-        <!-- Render radio options -->
+        <!-- Radio options section -->
         <div class="row">
             <div class="col-md-12">
                 <?php echo $stickyForm->renderRadio($formConfig['radio_options'], 'mb-3', $formConfig['radio_options']['layout']); ?>
             </div>
         </div>
 
-        <!-- Render checkboxes -->
+        <!-- Checkbox options section -->
         <div class="row">
             <div class="col-md-12">
                 <?php echo $stickyForm->renderCheckboxGroup($formConfig['checkboxes'], 'mb-3', $formConfig['checkboxes']['layout']); ?>
             </div>
         </div>
+        <!-- Submit button -->
         <input type="submit" class="btn btn-primary" value="Submit">
     </form>
 </div>

@@ -1,21 +1,36 @@
+/**
+ * StickyForm Class
+ * Extends the Validation class to provide form validation and rendering capabilities
+ * This class handles form validation, maintains form values after submission, and renders form elements
+ */
 <?php
 require_once 'Validation.php';
 
 class StickyForm extends Validation {
-    // Validate form inputs and retain their values
+    /**
+     * Validates form inputs and retains their values after submission
+     * param array $data - The submitted form data
+     * param array $formConfig - Configuration array containing form element definitions
+     * return array - Updated form configuration with validation results and retained values
+     */
     public function validateForm($data, $formConfig) {
         foreach ($formConfig as $key => &$element) {
+            // Store the submitted value for each form element
             $element['value'] = $data[$key] ?? '';
 
+            // Get custom error message if defined
             $customErrorMsg = $element['errorMsg'] ?? null;
 
+            // Handle text and textarea inputs
             if (isset($element['type']) && in_array($element['type'], ['text', 'textarea']) && isset($element['regex'])) {
+                // Check if required field is empty
                 if ($element['required'] && empty($element['value'])) {
                     $element['error'] = $customErrorMsg ?? 'This field is required.';
                     $formConfig['masterStatus']['error'] = true;
                 } elseif (!$element['required'] && empty($element['value'])) {
-                    // Do nothing if the field is not required and the value is empty
+                    // Skip validation for optional empty fields
                 } else {
+                    // Validate field against regex pattern
                     $isValid = $this->checkFormat($element['value'], $element['regex'], $customErrorMsg);
                     if (!$isValid) {
                         $element['error'] = $this->getErrors()[$element['regex']];
@@ -23,18 +38,20 @@ class StickyForm extends Validation {
                 }
             }
             
-
+            // Handle select dropdowns
             elseif (isset($element['type']) && $element['type'] === 'select') {
                 $element['selected'] = $data[$key] ?? '';
+                // Validate required select fields
                 if (isset($element['required']) && $element['required'] && ($element['selected'] === '0' || empty($element['selected']))) {
                     $element['error'] = $customErrorMsg ?? 'This field is required.';
                     $formConfig['masterStatus']['error'] = true;
                 }
             }
             
-
+            // Handle checkbox inputs (both single and groups)
             elseif (isset($element['type']) && $element['type'] === 'checkbox') {
                 if (isset($element['options'])) {
+                    // Handle checkbox groups
                     $anyChecked = false;
                     foreach ($element['options'] as &$option) {
                         $option['checked'] = in_array($option['value'], $data[$key] ?? []);
@@ -42,11 +59,13 @@ class StickyForm extends Validation {
                             $anyChecked = true;
                         }
                     }
+                    // Validate required checkbox groups
                     if (isset($element['required']) && $element['required'] && !$anyChecked) {
                         $element['error'] = $customErrorMsg ?? 'This field is required.';
                         $formConfig['masterStatus']['error'] = true;
                     }
                 } else {
+                    // Handle single checkbox
                     $element['checked'] = isset($data[$key]);
                     if (isset($element['required']) && $element['required'] && !$element['checked']) {
                         $element['error'] = $customErrorMsg ?? 'This field is required.';
@@ -54,6 +73,7 @@ class StickyForm extends Validation {
                     }
                 }
             }
+            // Handle radio button groups
             elseif (isset($element['type']) && $element['type'] === 'radio') {
                 $isChecked = false;
                 foreach ($element['options'] as &$option) {
@@ -62,6 +82,7 @@ class StickyForm extends Validation {
                         $isChecked = true;
                     }
                 }
+                // Validate required radio groups
                 if (isset($element['required']) && $element['required'] && !$isChecked) {
                     $element['error'] = $customErrorMsg ?? 'This field is required.';
                     $formConfig['masterStatus']['error'] = true;
@@ -71,7 +92,12 @@ class StickyForm extends Validation {
         return $formConfig;
     }
 
-    // Generate HTML for select options
+    /**
+     * Generates HTML for select options
+     * param array $options - Array of options with values as keys and labels as values
+     * param string $selectedValue - Currently selected value
+     * return string - HTML for select options
+     */
     public function createOptions($options, $selectedValue) {
         $html = '';
         foreach ($options as $value => $label) {
@@ -81,12 +107,21 @@ class StickyForm extends Validation {
         return $html;
     }
 
-    // Helper function to render error messages
+    /**
+     * Renders error message for a form element
+     * param array $element - Form element configuration
+     * return string - HTML for error message
+     */
     private function renderError($element) {
         return !empty($element['error']) ? "<span class=\"text-danger\">{$element['error']}</span><br>" : '';
     }
 
-    // Render text input field
+    /**
+     * Renders a text input field
+     * param array $element - Form element configuration
+     * param string $class - Additional CSS classes
+     * return string - HTML for text input
+     */
     public function renderInput($element, $class = '') {
         $errorOutput = $this->renderError($element);
         return <<<HTML
@@ -98,7 +133,12 @@ class StickyForm extends Validation {
 HTML;
     }
 
-    // Render textarea field
+    /**
+     * Renders a textarea field
+     * param array $element - Form element configuration
+     * param string $class - Additional CSS classes
+     * return string - HTML for textarea
+     */
     public function renderTextarea($element, $class = '') {
         $errorOutput = $this->renderError($element);
         return <<<HTML
@@ -110,7 +150,13 @@ HTML;
 HTML;
     }
 
-    // Render radio buttons
+    /**
+     * Renders a group of radio buttons
+     * param array $element - Form element configuration
+     * param string $class - Additional CSS classes
+     * param string $layout - Layout style ('vertical' or 'horizontal')
+     * return string - HTML for radio button group
+     */
     public function renderRadio($element, $class = '', $layout = 'vertical') {
         $errorOutput = $this->renderError($element);
         $optionsHtml = '';
@@ -133,7 +179,13 @@ HTML;
 HTML;
     }
 
-    // Render checkbox
+    /**
+     * Renders a single checkbox
+     * param array $element - Form element configuration
+     * param string $class - Additional CSS classes
+     * param string $layout - Layout style ('vertical' or 'horizontal')
+     * return string - HTML for checkbox
+     */
     public function renderCheckbox($element, $class = '', $layout = 'vertical') {
         $checked = $element['checked'] ? 'checked' : '';
         $errorOutput = $this->renderError($element);
@@ -149,7 +201,13 @@ HTML;
 HTML;
     }
 
-    // Render checkbox group
+    /**
+     * Renders a group of checkboxes
+     * param array $element - Form element configuration
+     * param string $class - Additional CSS classes
+     * param string $layout - Layout style ('vertical' or 'horizontal')
+     * return string - HTML for checkbox group
+     */
     public function renderCheckboxGroup($element, $class = '', $layout = 'vertical') {
         $errorOutput = $this->renderError($element);
         $optionsHtml = '';
@@ -172,7 +230,12 @@ HTML;
 HTML;
     }
 
-    // Render select box
+    /**
+     * Renders a select dropdown
+     * param array $element - Form element configuration
+     * param string $class - Additional CSS classes
+     * return string - HTML for select dropdown
+     */
     public function renderSelect($element, $class = '') {
         $errorOutput = $this->renderError($element);
         $optionsHtml = $this->createOptions($element['options'], $element['selected']);

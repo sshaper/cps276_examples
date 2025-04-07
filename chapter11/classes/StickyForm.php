@@ -1,9 +1,10 @@
+<?php
 /**
  * StickyForm Class
  * Extends the Validation class to provide form validation and rendering capabilities
  * This class handles form validation, maintains form values after submission, and renders form elements
  */
-<?php
+
 require_once 'Validation.php';
 
 class StickyForm extends Validation {
@@ -16,6 +17,9 @@ class StickyForm extends Validation {
     public function validateForm($data, $formConfig) {
         foreach ($formConfig as $key => &$element) {
             // Store the submitted value for each form element
+
+            //print_r($data[$key]);
+
             $element['value'] = $data[$key] ?? '';
 
             // Get custom error message if defined

@@ -1,9 +1,10 @@
+<?php
 /**
  * Main form handling script
  * Demonstrates the usage of StickyForm class for form validation and rendering
  * Includes various form elements like text inputs, select boxes, radio buttons, and checkboxes
  */
-<?php
+
 require_once('classes/StickyForm.php');
 
 // Configuration array defining the structure and validation rules for the form
@@ -20,11 +21,12 @@ $formConfig = [
         'required' => true,
         'value' => ''
     ],
+
     // Last name field configuration
     'last_name' => [
         'type' => 'text',
         'regex' => 'name',
-        'label' => '*Last Name',
+        'label' => 'Last Name',
         'name' => 'last_name',
         'id' => 'last_name',
         'errorMsg' => 'You must enter a valid last name.',
@@ -210,13 +212,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="container mt-5">
     <!-- Main form container -->
-    <form method="post" action="">
+    <form method="post" action="index.php">
         <!-- Name fields row -->
         <div class="row">
             <!-- First name field -->
             <div class="col-md-6">
                 <?php echo $stickyForm->renderInput($formConfig['first_name'], 'mb-3'); ?>
             </div>
+
+
 
             <!-- Last name field -->
             <div class="col-md-6">

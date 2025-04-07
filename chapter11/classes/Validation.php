@@ -1,9 +1,10 @@
+<?php
 /**
  * Validation Class
  * Provides validation functionality for form inputs using regex patterns
  * Handles common validation patterns like names, phone numbers, emails, etc.
  */
-<?php
+
 class Validation {
     // Array to store validation error messages
     private $errors = [];

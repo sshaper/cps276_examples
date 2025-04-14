@@ -45,8 +45,14 @@ function getOMDBData($title) {
     // Close the cURL session
     curl_close($ch);
 
+    echo "<pre>";
+    print_r($response);
+    echo "</pre>";
+
     // Decode the JSON response into a PHP array
     $omdb_data = json_decode($response, true);
+
+    
 
     // Check if the API response indicates success
     if (isset($omdb_data['Response']) && $omdb_data['Response'] !== 'False') {

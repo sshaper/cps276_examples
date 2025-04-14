@@ -7,12 +7,21 @@ $postData = file_get_contents('php://input');
 // The 'true' parameter makes it return an associative array instead of an object
 $data = json_decode($postData, true);
 
-// In a real application, you would process the data here:
-// - Validate the input
-// - Sanitize the data
-// - Save to a database
-// - Send emails
-// etc.
+// Create an HTML table with the data
+$table = '<table class="table table-bordered">';
+$table .= '<thead><tr><th>Field Name</th><th>Field Value</th></tr></thead>';
+$table .= '<tbody>';
+
+// Loop through each field in the data
+foreach ($data as $field => $value) {
+    // Add a row for each field-value pair
+    $table .= "<tr>";
+    $table .= "<td>{$field}</td>";
+    $table .= "<td>" . htmlspecialchars($value) . "</td>";
+    $table .= "</tr>";
+}
+
+$table .= '</tbody></table>';
 
 // Set the response header to indicate we're sending JSON data
 header('Content-Type: application/json');
@@ -22,6 +31,7 @@ header('Content-Type: application/json');
 // - Echo back the received data to confirm it was processed
 echo json_encode([
     "message" => "Data successfully received!",  // Success message
-    "received" => $data                         // Echo back the received data
+    "table" => $table,                          // HTML table with the data
+    "received" => $data                         // Original data for reference
 ]);
 ?>

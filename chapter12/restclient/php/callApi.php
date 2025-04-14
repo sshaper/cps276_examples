@@ -22,6 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 1. Make a GET request to the API with the search term
         // 2. Decode the JSON response into a PHP array
         $response = file_get_contents("$apiUrl?search=$encodedSearchTerm");
+
+        
+        // 3. Decode the JSON response into a PHP array
         $result = json_decode($response, true);
     } else {
         // For add/update/delete operations:

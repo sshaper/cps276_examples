@@ -1,22 +1,27 @@
+/**
+ * REST API for Book Management System
+ * This API provides endpoints for managing books with CRUD operations
+ * and search functionality.
+ */
+
 <?php
-// Set the response content type to JSON
+// Set response type to JSON to ensure proper API response format
 header('Content-Type: application/json');
 
-// Include the PDO methods class for database operations
+// Include the database connection class that handles PDO operations
 require_once 'classes/Pdo_methods.php';
 
-// Initialize PDO object and response array
+// Initialize database connection and prepare response array
 $pdo = new PdoMethods();
 $response = [];
 
-// Get the HTTP method (GET, POST, etc.) and the requested path
+// Extract HTTP method (GET, POST, etc.) and request path from server variables
 $method = $_SERVER['REQUEST_METHOD'];
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// Handle the '/books' endpoint
-// Note: The commented out path is for local development, the current path is for the server
-if ($path === '/~sshaper/cps276_examples/chapter12/restapi/api.php/books'){
-    // Handle GET requests with search parameter
+// Handle requests to the /books endpoint
+if ($path === '/~sshaper/cps276_examples/chapter12/restapi/api.php/books') {
+    // Handle GET requests - Used for searching books
     if ($method === 'GET' && isset($_GET['search'])) {
         // Prepare search term with wildcards for partial matching
         $searchTerm = '%' . $_GET['search'] . '%';
@@ -24,7 +29,7 @@ if ($path === '/~sshaper/cps276_examples/chapter12/restapi/api.php/books'){
         $bindings = [[':search', $searchTerm, 'str']];
         $result = $pdo->selectBinded($sql, $bindings);
         
-        // Handle different result scenarios
+        // Handle different response scenarios
         if ($result === 'error') {
             $response = ['message' => 'Error querying the database'];
         } elseif (empty($result)) {
@@ -32,43 +37,57 @@ if ($path === '/~sshaper/cps276_examples/chapter12/restapi/api.php/books'){
         } else {
             $response = ['message' => 'Book Data', 'books' => $result];
         }
-    } 
-    // Handle POST requests with action parameter
+    }
+    // Handle POST requests - Used for adding, updating, and deleting books
     elseif ($method === 'POST' && isset($_POST['action'])) {
-        // Get book details from POST data
+        // Extract book details from POST data
         $title = $_POST['title'] ?? '';
         $author = $_POST['author'] ?? '';
         
-        // Handle different actions: add, update, or delete
+        // Handle adding a new book
         if ($_POST['action'] === 'add') {
-            // Validate required fields and add new book
+            // Validate required fields
             if (!empty($title) && !empty($author)) {
                 $sql = "INSERT INTO books (title, author) VALUES (:title, :author)";
-                $bindings = [[':title', $title, 'str'], [':author', $author, 'str']];
+                $bindings = [
+                    [':title', $title, 'str'],
+                    [':author', $author, 'str']
+                ];
                 $result = $pdo->otherBinded($sql, $bindings);
-                $response = ($result === 'noerror') ? ['message' => 'Book added successfully'] : ['message' => 'Error adding book'];
+                $response = ($result === 'noerror') 
+                    ? ['message' => 'Book added successfully']
+                    : ['message' => 'Error adding book'];
             } else {
                 $response = ['message' => 'Title and author are required'];
             }
-        } 
-        // Handle book update
+        }
+        // Handle updating an existing book
         elseif ($_POST['action'] === 'update' && isset($_POST['id'])) {
             $id = $_POST['id'];
             $sql = "UPDATE books SET title = :title, author = :author WHERE id = :id";
-            $bindings = [[':title', $title, 'str'], [':author', $author, 'str'], [':id', $id, 'int']];
+            $bindings = [
+                [':title', $title, 'str'],
+                [':author', $author, 'str'],
+                [':id', $id, 'int']
+            ];
             $result = $pdo->otherBinded($sql, $bindings);
-            $response = ($result === 'noerror') ? ['message' => 'Book updated successfully'] : ['message' => 'Error updating book'];
-        } 
-        // Handle book deletion
+            $response = ($result === 'noerror')
+                ? ['message' => 'Book updated successfully']
+                : ['message' => 'Error updating book'];
+        }
+        // Handle deleting a book
         elseif ($_POST['action'] === 'delete' && isset($_POST['id'])) {
             $id = $_POST['id'];
             $sql = "DELETE FROM books WHERE id = :id";
             $bindings = [[':id', $id, 'int']];
             $result = $pdo->otherBinded($sql, $bindings);
-            $response = ($result === 'noerror') ? ['message' => 'Book deleted successfully'] : ['message' => 'Error deleting book'];
+            $response = ($result === 'noerror')
+                ? ['message' => 'Book deleted successfully']
+                : ['message' => 'Error deleting book'];
         }
     }
 }
 
-// Output the response as JSON
+// Send the JSON response back to the client
 echo json_encode($response);
+?>

@@ -1,8 +1,8 @@
 <?php
 // Define a sample data array with user information
 $data = [
-    "name" => "John Doe",  // User's full name
-    "age" => 30,          // User's age
+    "name" => "John Doe,",  // User's full name
+    "age" => 30,         // User's age
     "city" => "New York"  // User's city
 ];
 

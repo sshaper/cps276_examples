@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <div class="container">
         <h1>File Operations</h1>
+        <p style="font-size: 1.5em;"><a href="writecsv.php">Go to Write CSV File Example</a></p>
         <form method="post" action="index.php">
             <button type="submit" name="action" value="read" class="btn btn-primary">Read File</button>
             <button type="submit" name="action" value="write" class="btn btn-primary">Write to File</button>

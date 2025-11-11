@@ -1,8 +1,10 @@
 <?php
-$name = "Scott";
-$age = 21;
 
-$output = "<p>{$name} is {$age} years old.</p>";
+
+$d = strtotime("March 28, 2006 9:42am");
+$output = date("The jS of F, Y, at g:i A", $d);
+// Output: "The 28th of March, 2006, at 9:42 AM"
+
 
 ?>
 

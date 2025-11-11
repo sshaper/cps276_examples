@@ -1,10 +1,11 @@
+<?php
 /**
  * REST API for Book Management System
  * This API provides endpoints for managing books with CRUD operations
  * and search functionality.
  */
 
-<?php
+
 // Set response type to JSON to ensure proper API response format
 header('Content-Type: application/json');
 

@@ -6,7 +6,7 @@
  */
 function getOMDBData($title) {
     // OMDb API key and base URL
-    $OMDB_API_KEY = 'dd7bc618'; // Your OMDb API key
+    $OMDB_API_KEY = 'xxxxxxxx'; // OMDb API key
     $url = 'https://www.omdbapi.com/';
 
     // Prepare query parameters for the API request

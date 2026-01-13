@@ -1,3 +1,7 @@
 .vscode/
+<<<<<<< HEAD
 **/api_key.txt
 **/classes/Db_conn.php
+=======
+**/api_key.txt
+>>>>>>> b24230a1b25d4beb00d79c5d8b31c48a60a57837

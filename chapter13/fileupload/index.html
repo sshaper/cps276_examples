@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include Bootstrap CSS for styling -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>File Upload Form</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>File Upload Form</h2>
+        <!-- Link to sample image for testing -->
+        <p>File to use for this example: <a href="picToUse/student_coding_web_application.png">image</a></p>
+        
+        <!-- File upload form -->
+        <form id="fileUploadForm">
+            <!-- Input for custom filename -->
+            <div class="form-group">
+                <label for="fileName">File Name</label>
+                <input type="text" class="form-control" id="fileName" placeholder="Enter file name" required>
+            </div>
+            <!-- File input field -->
+            <div class="form-group">
+                <label for="fileInput">Upload File</label>
+                <input type="file" class="form-control-file" id="fileInput">
+            </div>
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+        <!-- Div where the upload response will be displayed -->
+        <div id="responseMessage" class="mt-3"></div>
+    </div>
+
+    <script>
+        // Add event listener for form submission
+        document.getElementById('fileUploadForm').addEventListener('submit', function(event) {
+            // Prevent the default form submission
+            event.preventDefault();
+
+            var output = "";
+            // Get the file input and filename input elements
+            const fileInput = document.getElementById('fileInput');
+            const fileName = document.getElementById('fileName').value;
+            
+            // Create a FormData object to send the file
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);  // Add the file
+            formData.append('fileName', fileName);        // Add the custom filename
+
+            // Send the file to the server using fetch
+            fetch('php/upload.php', {
+                method: 'POST',
+                body: formData  // FormData will automatically set the correct content type
+            })
+            
+            .then(response => {
+                // For debugging: log the raw response text
+                response.clone().text().then(rawText => {
+                    console.log('Raw Text Response:', rawText);
+                });
+
+                // Parse the JSON response
+                return response.json();
+            })
+            
+            .then(data => {
+                // Handle the response based on success or failure
+                if(!data.error){
+                    // If successful, display the uploaded image
+                    output = `<h2>Response</h2>
+                            <p>Image name is: ${data.fileName}<br>
+                            <img src="${data.path}" alt="uploads image" /></p>`;
+                }
+                else {
+                    // If there was an error, display the error message
+                    output = `<h2>Response</h2><p>${data.msg}</p>`;
+                }
+                // Update the page with the response
+                document.getElementById('responseMessage').innerHTML = output;
+            })
+            .catch(error => {
+                // Handle any errors that occur during the fetch
+                output = `<h2>Response</h2><p>Error: ${error}</p>`;
+                document.getElementById('responseMessage').innerHTML = output;
+                console.log(error);
+            });
+        });
+    </script>
+</body>
+</html>

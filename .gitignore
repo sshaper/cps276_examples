@@ -1,0 +1,3 @@
+.vscode/
+**/api_key.txt
+**/classes/Db_conn.php

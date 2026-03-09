@@ -1,0 +1,67 @@
+PHP Directories & Files — 1.5 Hour Lecture (Teaching Order)
+============================================================
+
+1. INTRO — Why directories and files (≈5 min)
+   - Directories = folders for organizing files
+   - File operations = open, read, write, close (filing cabinet analogy)
+   - When you use them: uploads, logs, config, temp files, CSV data
+
+2. DIRECTORIES — Concepts & quick reference (≈10 min)
+   - mkdir(), rmdir(), chmod(), glob()
+   - When to use: upload dirs, temp storage, logs, cache, project structure
+   - Creating dirs: mkdir() basic, nested with third parameter true
+   - Note: russet-v8 needs 0777 for web server access
+
+3. DIRECTORIES — Permissions & umask (≈10 min)
+   - What permissions are (security for files/folders)
+   - Umask: default mask (e.g. 022); requested & ~umask = result
+   - 0777 with umask 022 → 755; why 777 is "class only," 755/644 in production
+   - Fix on russet-v8: chmod() after mkdir() for true 0777
+
+4. DIRECTORIES — Live demo (≈10 min)
+   - Create/remove single directory (form example from lesson)
+   - Show failure without chmod(), then fix
+   - Create nested dirs, then recursive delete (delete_files) — show rmdir on non-empty fails first
+
+5. FINDING FILES — glob() (≈5 min)
+   - glob() as search; patterns: *, ?, [abc]
+   - Quick demo: *.txt, test*.* in a folder
+   - Flags: GLOB_MARK, GLOB_NOSORT (mention GLOB_ONLYDIR correction if needed)
+   - touch(), unlink() inside dirs; loop with glob() and filesize()
+
+6. FILES — Paths & modes (≈10 min)
+   - Paths: simple name, relative (., ..), absolute
+   - chdir() and "current directory"; draw a small tree and ask "what is ../data/file.txt?"
+   - fopen() second argument: r, w, a, r+, w+, a+
+   - Binary vs text: use "rb"/"wb" for images, PDFs, etc.; text mode can corrupt binary
+
+7. FILES — Basic operations & quick helpers (≈10 min)
+   - fopen / fread / fwrite / fclose with try-catch and error check
+   - file_get_contents(), file_put_contents(), file()
+   - When to use stream vs one-liner
+
+8. FILES — CSV (≈10 min)
+   - fputcsv() / fgetcsv() for tabular data
+   - Demo: write users.csv, read back, display as HTML table
+   - Optional: show comma in a name — why quoting matters
+
+9. FILES — Management & demo (≈5 min)
+   - copy(), rename() (rename = move to new path), unlink()
+   - Quick demo or tie to "upload folder" (mkdir uploads, chmod, put file, glob to list)
+
+10. RECURSION — delete_files() walkthrough (≈5 min)
+    - Step through on a tree: depth-first, base case (file → unlink), then rmdir empty dirs
+    - Why directories must be empty before rmdir()
+
+11. ERROR HANDLING & SECURITY (≈5 min)
+    - Check fopen/mkdir success; try-catch; user-friendly messages
+    - Why not 777 in production; don't use raw user input in paths (path traversal)
+
+12. IN-CLASS EXERCISE (≈10 min)
+    - Directories: "Create logs/2025/03/ with correct permissions"
+    - Files: "Read data.txt and count lines containing 'error'"
+    - Share one solution and compare
+
+13. WRAP-UP (≈5 min)
+    - Tips, common mistakes, best practices from the lessons
+    - Where this leads: uploads, config files, logging, next chapter

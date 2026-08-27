@@ -1,57 +1,44 @@
 <?php
-
 $msg = "";
+$dir = "mydirectory";
 
-//ISSET CHECKS TO SEE IF A VARIBLE EXISTS. RETURNS TRUE IF IT DOES AND FALSE IF IT DOES NOT. 
-if(isset($_POST['create'])){
-  
-   
-  $success = mkdir('mydirectory');
-  
-/* I NEED TO USE THE CHMOD HERE TO SET THE PROPER PERMISSIONS.*/
-  chmod('mydirectory', 0777);
- 
-  if($success){
-    $msg = "Directory Created";
-  }
-  else{
-    $msg = "There was a problem";
-  }
-  
+// isset checks whether a variable exists.
+if (isset($_POST["create"])) {
+    if (!is_dir($dir)) {
+        $success = mkdir($dir);
+        // Set permissions so the web server can use the folder on russet.
+        chmod($dir, 0777);
+        $msg = $success ? "Directory Created" : "There was a problem";
+    } else {
+        $msg = "Directory already exists";
+    }
 }
-if(isset($_POST['remove'])){
-  $success = rmdir('mydirectory');
-  if($success){
-    $msg = "Directory Removed";
-  }
-  else{
-    $msg = "There was a problem";
-  }
+
+if (isset($_POST["remove"])) {
+    if (is_dir($dir)) {
+        $success = rmdir($dir);
+        $msg = $success ? "Directory Removed" : "There was a problem (is it empty?)";
+    } else {
+        $msg = "Directory does not exist";
+    }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
   <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Single Directory</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<link rel="stylesheet" href="public/css/main.css">
-  </head>
-  <body>
-    <div id="wrapper" class="container">
-      <h1>Single Directory</h1>
-      <p><?php echo $msg; ?></p>
-      <p>This example demonstrates how to create and remove a single "empty" directory.</p>
-      <p>NOTE: In order for this to work the folder this file is in <code>php_files_directories</code> and that directory had to have permissions of 0777.</p>
-      <form action="single_directory.php" method="POST">
-        <input type="submit" class="btn btn-primary" name="create" value="Create Directory">
-        <input type="submit" class="btn btn-primary" name="remove" value="Remove Directory">
-      </form>
-      
-    </div>
-    
-
-  </body>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Single Directory</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container py-4">
+  <h1>Single Directory</h1>
+  <p><?php echo htmlspecialchars($msg); ?></p>
+  <p>Create and remove one empty directory. Checks with <code>is_dir</code> before acting.</p>
+  <p>NOTE: The folder containing this script must be writable (0777 on russet).</p>
+  <form action="single_directory.php" method="POST">
+    <input type="submit" class="btn btn-primary" name="create" value="Create Directory">
+    <input type="submit" class="btn btn-danger" name="remove" value="Remove Directory">
+  </form>
+</body>
 </html>

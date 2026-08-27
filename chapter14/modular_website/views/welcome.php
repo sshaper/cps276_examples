@@ -2,9 +2,7 @@
 function init(){
     return <<<HTML
     <h1>Welcome</h1>
-    <p>Welcome the sticky form mod application.  Click one of the links above</p>
+    <p>Welcome to the modular contacts application. Use the links above to add or delete contacts.</p>
 HTML;
 }
 ?>
-
-

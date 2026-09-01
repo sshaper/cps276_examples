@@ -1,29 +1,61 @@
 <?php
+/**
+ * deleteContact.php — Fetch POST controller (not an HTML page)
+ *
+ * JavaScript sends { "id": 12 } for ONE row (the Delete button on that row).
+ * This file deletes that contact and returns JSON.
+ * We use POST (not HTTP DELETE) because that is enough at this course level.
+ */
 
-require_once 'classes/Pdo_methods.php';
-$pdo = new PdoMethods();
+require_once __DIR__ . '/../classes/Pdo_methods.php';
 
-$msg = "<p>&nbsp;</p>";
-$output = "";
-$deleted = false;
+header('Content-Type: application/json');
 
-if (isset($_POST['delete'])) {
-    if (isset($_POST['chkbx'])) {
-        foreach ($_POST['chkbx'] as $id) {
-            $sql = "DELETE FROM contactMod WHERE id=:id";
-            $bindings = [
-                [':id', $id, 'int'],
-            ];
-            $result = $pdo->otherBinded($sql, $bindings);
-
-            if ($result === 'error') {
-                $msg = "<p class='text-danger'>There was a problem deleting this record.</p>";
-                break;
-            }
-            $deleted = true;
-        }
-    }
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode([
+        'error' => true,
+        'message' => 'Use POST to delete a contact.'
+    ]);
+    exit;
 }
 
-$sql = "SELECT * FROM contactMod";
-$records = $pdo->selectNotBinded($sql);
+// Same pattern as add/update: JSON is in php://input, not $_POST.
+$raw = file_get_contents('php://input');
+$data = json_decode($raw, true);
+
+if (!is_array($data)) {
+    echo json_encode([
+        'error' => true,
+        'message' => 'Invalid JSON.'
+    ]);
+    exit;
+}
+
+$id = (int)($data['id'] ?? 0);
+if ($id < 1) {
+    echo json_encode([
+        'error' => true,
+        'message' => 'Invalid contact id.'
+    ]);
+    exit;
+}
+
+$pdo = new PdoMethods();
+$sql = 'DELETE FROM contactMod WHERE id=:id';
+$bindings = [
+    [':id', $id, 'int'], // bound parameter — user input is not glued into the SQL
+];
+$result = $pdo->otherBinded($sql, $bindings);
+
+if ($result === 'error') {
+    echo json_encode([
+        'error' => true,
+        'message' => 'There was a problem deleting this record.'
+    ]);
+    exit;
+}
+
+echo json_encode([
+    'error' => false,
+    'message' => 'Contact deleted successfully'
+]);

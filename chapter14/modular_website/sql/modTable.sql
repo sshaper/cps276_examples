@@ -1,3 +1,7 @@
+-- Chapter 14: import this file once into your russet MySQL database.
+-- It creates the contactMod table used by the modular contact manager.
+-- Controllers INSERT / SELECT / DELETE this table through PdoMethods.
+--
 -- MySQL dump 10.13  Distrib 5.7.32, for Linux (x86_64)
 --
 -- Host: localhost    Database: final_project
@@ -23,12 +27,12 @@ DROP TABLE IF EXISTS `contactMod`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `contactMod` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `firstName` varchar(250) NOT NULL DEFAULT 'no data entered',
-  `lastName` varchar(250) NOT NULL DEFAULT 'no data entered',
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,  -- used by JavaScript checkboxes and DELETE
+  `firstName` varchar(250) NOT NULL DEFAULT 'no data entered',  -- JSON key: first_name
+  `lastName` varchar(250) NOT NULL DEFAULT 'no data entered',   -- JSON key: last_name
   `address` varchar(250) NOT NULL DEFAULT 'no data entered',
   `state` varchar(250) NOT NULL DEFAULT 'no data entered',
-  `zip` varchar(250) NOT NULL DEFAULT 'no data entered',
+  `zip` varchar(250) NOT NULL DEFAULT 'no data entered',        -- JSON key: zip_code
   `phone` varchar(250) NOT NULL DEFAULT 'no data entered',
   `email` varchar(250) NOT NULL DEFAULT 'no data entered',
 

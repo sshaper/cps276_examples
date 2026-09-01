@@ -1,4 +1,15 @@
 <?php
+/**
+ * Pdo_methods.php — Chapter 9 PDO helper, reused in Chapter 14
+ *
+ * This example uses:
+ *   otherBinded()      — INSERT (add), UPDATE (update), DELETE (delete)
+ *   selectNotBinded()  — SELECT all rows (listContacts) and newest row after insert
+ *
+ * Returns "error" or "noerror" for otherBinded, or an array of rows for SELECT.
+ * If a query fails, this class may echo the PDO message, which can break JSON.
+ * Check the Network tab if Fetch cannot parse the response.
+ */
 /* THIS CLASS EXTENDS THE DATABASE CONNECTION CLASS AND BUILD ON IT WITH PDO COMMANDS */
 /* THE DATABASE CONNECTION CLASS CAN BE STORED OUTSIDE OF THE EXAMPLE FILES SO YOU CANNOT SEE THE CONNECTION INFORMATION. ALSO IT IS MORE SECURE*/
 require_once "Db_conn.php";

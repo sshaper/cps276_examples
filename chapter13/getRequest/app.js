@@ -11,7 +11,7 @@ async function loadPerson() {
       throw new Error("Network response was not ok");
     }
 
-    // 3) Parse JSON text into a normal object
+    // 3) Parse JSON. If this throws, read response.text() instead (see phpjson.html).
     const data = await response.json();
     console.log("Parsed data:", data);
 

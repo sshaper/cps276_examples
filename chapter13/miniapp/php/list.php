@@ -1,15 +1,18 @@
 <?php
-header("Content-Type: application/json");
+require_once __DIR__ . '/../classes/Pdo_methods.php';
+header('Content-Type: application/json');
 
-$file = __DIR__ . "/notes.json";
-if (!file_exists($file)) {
-    file_put_contents($file, json_encode(["Buy milk", "Finish CPS276 lab"]));
-}
+$pdo = new PdoMethods();
+$rows = $pdo->selectNotBinded('SELECT note FROM miniapp ORDER BY id ASC');
 
-$items = json_decode(file_get_contents($file), true);
-if (!is_array($items)) {
-    echo json_encode(["error" => true, "message" => "Could not read notes.", "items" => []]);
+if ($rows === 'error') {
+    echo json_encode(['error' => true, 'message' => 'Could not load notes.', 'items' => []]);
     exit;
 }
 
-echo json_encode(["error" => false, "message" => "OK", "items" => $items]);
+$items = [];
+foreach ($rows as $row) {
+    $items[] = $row['note'];
+}
+
+echo json_encode(['error' => false, 'message' => 'OK', 'items' => $items]);

@@ -18,6 +18,7 @@ async function submitData(event) {
       body: JSON.stringify(payload)
     });
 
+    // If this throws, PHP probably did not return JSON — see phpjson.html (response.text).
     const data = await response.json();
     console.log("Server response:", data);
 

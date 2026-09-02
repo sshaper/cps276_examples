@@ -1,30 +1,40 @@
 <?php
-header("Content-Type: application/json");
+require_once __DIR__ . '/../classes/Pdo_methods.php';
+header('Content-Type: application/json');
 
-$file = __DIR__ . "/notes.json";
-if (!file_exists($file)) {
-    file_put_contents($file, json_encode([]));
-}
-
-$raw = file_get_contents("php://input");
+$raw = file_get_contents('php://input');
 $data = json_decode($raw, true);
-$note = trim($data["note"] ?? "");
+$note = trim($data['note'] ?? '');
 
-if ($note === "") {
-    echo json_encode(["error" => true, "message" => "Note cannot be empty.", "items" => []]);
+if ($note === '') {
+    echo json_encode(['error' => true, 'message' => 'Note cannot be empty.', 'items' => []]);
     exit;
 }
 
-$items = json_decode(file_get_contents($file), true);
-if (!is_array($items)) {
-    $items = [];
+$pdo = new PdoMethods();
+$saved = $pdo->otherBinded(
+    'INSERT INTO miniapp (note) VALUES (:note)',
+    [[':note', $note, 'str']]
+);
+
+if ($saved === 'error') {
+    echo json_encode(['error' => true, 'message' => 'Could not add the note.', 'items' => []]);
+    exit;
 }
 
-$items[] = $note;
-file_put_contents($file, json_encode($items, JSON_PRETTY_PRINT));
+$rows = $pdo->selectNotBinded('SELECT note FROM miniapp ORDER BY id ASC');
+if ($rows === 'error') {
+    echo json_encode(['error' => true, 'message' => 'Note was saved but the list could not be loaded.', 'items' => []]);
+    exit;
+}
+
+$items = [];
+foreach ($rows as $row) {
+    $items[] = $row['note'];
+}
 
 echo json_encode([
-    "error" => false,
-    "message" => "Note added.",
-    "items" => $items
+    'error' => false,
+    'message' => 'Note added.',
+    'items' => $items
 ]);

@@ -1,15 +1,22 @@
 /*
   Chapter 13 mini-app
   Flow:
-  1) loadNotes() GET list.php
+  1) loadNotes() GET php/list.php
   2) renderNotes() builds <li> items
-  3) addNote() POST add.php then re-render
+  3) addNote() POST php/add.php then re-render
+  Notes are stored in the MySQL table named miniapp.
 */
 
 const noteForm = document.querySelector("#noteForm");
 const noteText = document.querySelector("#noteText");
 const noteList = document.querySelector("#noteList");
 const message = document.querySelector("#message");
+
+async function parseJsonResponse(response) {
+  const raw = await response.text();
+  console.log("PHP response:", raw);
+  return JSON.parse(raw);
+}
 
 function renderNotes(notes) {
   noteList.innerHTML = "";
@@ -23,7 +30,7 @@ function renderNotes(notes) {
 async function loadNotes() {
   try {
     const response = await fetch("php/list.php");
-    const data = await response.json();
+    const data = await parseJsonResponse(response);
     if (data.error) {
       message.textContent = data.message;
       return;
@@ -50,7 +57,7 @@ async function addNote(event) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ note: text })
     });
-    const data = await response.json();
+    const data = await parseJsonResponse(response);
     message.textContent = data.message;
     if (!data.error) {
       noteText.value = "";

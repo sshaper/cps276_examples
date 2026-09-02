@@ -8,11 +8,12 @@
 </head>
 <body class="container py-4">
   <h1>Notes Mini-App</h1>
-  <p class="text-muted">Import <code>sql/miniapp.sql</code> and put your russet credentials in <code>classes/Db_conn.php</code> before you load this page.</p>
+  <p class="text-muted">Import <code>sql/miniapp.sql</code> and put your russet credentials in <code>classes/Db_conn.php</code> before you use this page.</p>
   <form id="noteForm" class="mb-3">
     <label for="noteText" class="form-label">New note</label>
-    <input id="noteText" class="form-control" required>
-    <button class="btn btn-primary mt-2">Add Note</button>
+    <input id="noteText" class="form-control" >
+    <button class="btn btn-primary mt-2" id="addNoteButton">Add Note</button>
+    <button class="btn btn-primary mt-2" id="deleteNotesButton">Delete Notes</button>
   </form>
   <p id="message"></p>
   <ul id="noteList"></ul>

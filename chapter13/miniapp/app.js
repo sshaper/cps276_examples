@@ -7,7 +7,7 @@
   Notes are stored in the MySQL table named miniapp.
 */
 
-const noteForm = document.querySelector("#noteForm");
+
 const noteText = document.querySelector("#noteText");
 const noteList = document.querySelector("#noteList");
 const message = document.querySelector("#message");
@@ -69,5 +69,18 @@ async function addNote(event) {
   }
 }
 
-noteForm.addEventListener("submit", addNote);
+async function deleteNotes() {
+  try {
+    const response = await fetch("php/delete.php");
+    const data = await parseJsonResponse(response);
+    noteList.innerHTML = "";
+    message.textContent = data.message;
+  } catch (error) {
+    console.error(error);
+    message.textContent = "Could not delete notes.";
+  }
+}
+
+addNoteButton.addEventListener("click", addNote);
+deleteNotesButton.addEventListener("click", deleteNotes);
 loadNotes();

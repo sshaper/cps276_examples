@@ -4,14 +4,17 @@
  *
  * This example uses:
  *   otherBinded()      — INSERT (add), UPDATE (update), DELETE (delete)
- *   selectNotBinded()  — SELECT all rows (listContacts) and newest row after insert
+ *   selectNotBinded()  — SELECT all rows (listContacts) and the newest row after insert
  *
- * Returns "error" or "noerror" for otherBinded, or an array of rows for SELECT.
+ * Bindings look like [ ':email', $value, 'str' ] or [ ':id', $id, 'int' ].
+ * User text is never concatenated into the SQL string.
+ *
+ * SELECT methods return an array of rows, or the string "error".
+ * otherBinded returns "noerror" or "error". It does not return the new id.
+ *
  * If a query fails, this class may echo the PDO message, which can break JSON.
  * Check the Network tab if Fetch cannot parse the response.
  */
-/* THIS CLASS EXTENDS THE DATABASE CONNECTION CLASS AND BUILD ON IT WITH PDO COMMANDS */
-/* THE DATABASE CONNECTION CLASS CAN BE STORED OUTSIDE OF THE EXAMPLE FILES SO YOU CANNOT SEE THE CONNECTION INFORMATION. ALSO IT IS MORE SECURE*/
 require_once "Db_conn.php";
 class PdoMethods extends DatabaseConn {
 
@@ -22,12 +25,10 @@ class PdoMethods extends DatabaseConn {
 	private $error;
 
 
-	/* THIS METHOD IS FOR ALL SELECT STATEMENTS THAT NEED TO HAVE A BINDING TO PROTECT THE DATA.  THE SCRIPT TAKES THE SQL STATEMENTS AN THE BINDING ARRAY AS ITS PARAMETERS AND PERFORMS THE QUERY.  IT WILL RUN THE QUERY AND RETURN THE RESULT AS AN ASSOCIATIVE ARRAY OR AN ERROR STRING.*/
+	/* SELECT with bound values (WHERE email = :email, WHERE id = :id). */
 	public function selectBinded($sql, $bindings){
 		$this->error = false;
 
-		//I CREATE A TRY CATCH BLOCK TO CATCH ANY ERRORS THAT MIGHT ARRISE AND RETURNS AN ERROR MESSAGE.
-		
 		try{
 			$this->db_connection();
 			$this->sth = $this->conn->prepare($sql);
@@ -36,25 +37,20 @@ class PdoMethods extends DatabaseConn {
 		}
 		catch(PDOException $e){
 			
-			//THIS WILL OUTPUT THE ERROR MESSAGE TO THE BROWSER REMOVE IF IN PRODUCTION
-			echo $e->getMessage();
+			echo $e->getMessage(); // Remove in production; it can break Fetch JSON.
 			return 'error';
 			
 		}
 		
-		//THIS CLOSES THE DATABASE CONNECTION
 		$this->conn = null;
 		
-		//THIS RETURNS A RECORD SET
 		return $this->sth->fetchAll(PDO::FETCH_ASSOC);
 			
 	}
 
-	/* THIS FUNCTION DOES THE SAME AS THE ABOVE BUT DOES NOT NEED ANY BINDED PARAMETERS ARE NO PARAMTERS ARE PASSED */
+	/* SELECT with no user values in the SQL (SELECT * FROM contactMod). */
 	public function selectNotBinded($sql){
 			$this->error = false;
-			
-			//I CREATE A TRY CATCH BLOCK TO CATCH ANY ERRORS THAT MIGHT ARRISE AND RETURNS AN ERROR MESSAGE.
 			
 			try{
 				$this->db_connection();
@@ -62,25 +58,19 @@ class PdoMethods extends DatabaseConn {
 				$this->sth->execute();
 			}
 			catch (PDOException $e){
-				//THIS WILL OUTPUT THE ERROR MESSAGE TO THE BROWSER REMOVE IF IN PRODUCTION
 				echo $e->getMessage();
 				return 'error';
 			}
 			
-			//THIS CLOSES THE DATABASE CONNECTION
 			$this->conn = null;
 			
-			//THIS RETURNS THE RECORD SET AS AN ARRAY
 			return $this->sth->fetchAll(PDO::FETCH_ASSOC);
 
 		}
 
-	/* BECAUSE ONLY SELECT QUERIES RETURN A VALUE THE DOES ALL THE REST CREATE, UPDATE, DELETE */
+	/* INSERT, UPDATE, or DELETE with bound values. Returns "noerror" or "error". */
 	public function otherBinded($sql, $bindings){
 		$this->error = false;
-		
-		//I CREATE A TRY CATCH BLOCK TO CATCH ANY ERRORS THAT MIGHT ARRISE AND RETURNS AN ERROR MESSAGE.
-		
 		
 		try{
 			$this->db_connection();
@@ -89,49 +79,41 @@ class PdoMethods extends DatabaseConn {
 			$this->sth->execute();
 		}
 		catch(PDOException $e) {
-			//THIS WILL OUTPUT THE ERROR MESSAGE TO THE BROWSER REMOVE IF IN PRODUCTION
 			echo $e->getMessage();
 			return 'error';
 		}
 
-		//THIS CLOSES THE DATABASE CONNECTION
 		$this->conn = null;
 
-		//NO ERROR MEANS EVERYTHING WORKED
 		return 'noerror';
 	}
 
+	/* INSERT / UPDATE / DELETE with no bound values. Rarely used in this example. */
 	public function otherNotBinded($sql){
 		$this->error = false;
 			
-			//I CREATE A TRY CATCH BLOCK TO CATCH ANY ERRORS THAT MIGHT ARRISE AND RETURNS AN ERROR MESSAGE.
-
 			try{
 				$this->db_connection();
 				$this->sth = $this->conn->prepare($sql);
 				$this->sth->execute();
 			}
 			catch (PDOException $e){
-				//THIS WILL OUTPUT THE ERROR MESSAGE TO THE BROWSER REMOVE IF IN PRODUCTION
 				echo $e->getMessage();
 				return 'error';
 			}
 			
-			//THIS CLOSES THE DATABASE CONNECTION
 			$this->conn = null;
 			
-			//THIS RETURNS NOERROR IF NO ERRORS
 			return 'noerror';
 
 	}
 
-	/* CREATES A CONNECTION TO THE DATABASE */
 	private function db_connection(){
 		$this->db = new DatabaseConn();
 		$this->conn = $this->db->dbOpen();
 	}
 
-	/* CREATES THE BINDINGS */
+	/* Each binding is [ placeholder, value, 'str' or 'int' ]. */
 	private function createBinding($bindings){
 		foreach($bindings as $value){
 			switch($value[2]){

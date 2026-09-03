@@ -3,12 +3,16 @@
  * addContactView.php — HTML for the Add Contact screen only
  *
  * The router calls init() and index.php echoes the returned string.
- * This view does not talk to the database. contacts.js submits with Fetch.
+ * This view does not talk to the database. contacts.js submits with Fetch
+ * to controllers/addContact.php.
+ *
+ * Field ids (first_name, zip_code, ...) must match getFormData() and #error_first_name.
  */
 function init() {
     return <<<HTML
 
 <div class="container mt-5">
+  <h2>Add Contact</h2>
 <!-- Overall success/error sentence. JavaScript writes into this. -->
 <p>Fields with * are required.</p>
 <p id="acknowledgment"></p>

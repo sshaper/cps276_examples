@@ -1,8 +1,13 @@
 /*
   Chapter 14 - contacts.js
 
-  This file is the browser side of the contact manager.
+  One JavaScript file for Add Contact, List Contacts, and Update/Delete.
   PHP still validates and talks to MySQL. This file never reloads the page.
+
+  The view decides which parts run:
+    #contactForm           → Add Contact (submit → addContact)
+    #contactsTable[data-mode="list"]   → read-only rows
+    #contactsTable[data-mode="update"] → inputs + Update/Delete per row
 
   Flow (same as Chapter 13, now talking to controllers):
     User action
@@ -10,6 +15,9 @@
       → Fetch JSON to a PHP controller
       → PHP reports every field error in one response (empty and format)
       → update the DOM from the JSON response
+
+  JSON keys are first_name, zip_code, etc. The MySQL columns are firstName, zip.
+  listContacts.php maps those so this file never uses database column names.
 */
 
 /* Show a sentence in green (success) or red (error). Used on both pages. */
@@ -140,6 +148,9 @@ async function addContact(event) {
     }
 
     clearFieldErrors();
+    // Success leaves the typed values in the form so you can see what was sent.
+    // You could empty the inputs here if you want a blank form for the next contact.
+
   } catch (error) {
     console.error(error);
     showMessage(acknowledgment, "Could not add the contact.", true);
@@ -229,7 +240,9 @@ function renderContacts(contacts) {
   });
 }
 
-/* Fetch GET — load every contact when the list page opens, and after update/delete. */
+/* Fetch GET — load every contact when List or Update/Delete opens, and after update/delete.
+   keepMessage true means: refresh the rows but leave the success/error sentence in place.
+*/
 async function loadContacts(keepMessage) {
   const listMessage = document.querySelector("#listMessage");
   if (!keepMessage) {
@@ -349,7 +362,8 @@ function handleRowAction(event) {
 
 /*
   One JS file is included on Add Contact, List Contacts, and Update/Delete.
-  querySelector returns null if that element is not on the current page.
+  querySelector returns null if that element is not on the current page,
+  so Add Contact does not try to load the table, and List does not bind submit.
 */
 const contactForm = document.querySelector("#contactForm");
 if (contactForm) {

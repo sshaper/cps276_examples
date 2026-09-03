@@ -4,6 +4,9 @@
  *
  * Controllers call checkFormat(). JavaScript does not re-implement these patterns.
  * PHP is the final validation layer because browser checks can be skipped.
+ *
+ * Types used in this example: name, address, zip, phone, email.
+ * Controllers still decide the JSON field key (first_name, zip_code, ...).
  */
 class Validation {
     private $errors = [];

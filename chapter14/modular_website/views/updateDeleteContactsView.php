@@ -6,6 +6,9 @@
  * The table body starts empty. contacts.js Fetch-GETs the rows,
  * puts values in text inputs, and Fetch-POSTs update or delete per row.
  * There is no bulk Delete button. This view does not run SQL.
+ *
+ * data-mode="update" is how contacts.js knows to draw inputs plus Update/Delete
+ * instead of the read-only List Contacts table.
  */
 function init() {
     return <<<HTML

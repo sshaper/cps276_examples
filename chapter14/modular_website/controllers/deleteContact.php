@@ -3,8 +3,9 @@
  * deleteContact.php — Fetch POST controller (not an HTML page)
  *
  * JavaScript sends { "id": 12 } for ONE row (the Delete button on that row).
- * This file deletes that contact and returns JSON.
+ * This file deletes that contact from contactMod and returns JSON.
  * We use POST (not HTTP DELETE) because that is enough at this course level.
+ * There is no bulk delete in this example.
  */
 
 require_once __DIR__ . '/../classes/Pdo_methods.php';

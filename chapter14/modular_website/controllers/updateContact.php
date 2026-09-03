@@ -2,8 +2,9 @@
 /**
  * updateContact.php — Fetch POST controller (not an HTML page)
  *
- * JavaScript sends one row's edited fields plus id.
- * This file validates (same rules as add), runs UPDATE, and returns JSON.
+ * JavaScript sends one row's edited fields plus id (from tr.dataset.id).
+ * This file validates (same rules as add), runs UPDATE on contactMod, and returns JSON.
+ * A failed update does not rebuild the table; contacts.js keeps the typed values.
  *
  * Flow:
  *   Update button  →  JSON POST  →  this file  →  Validation + PDO  →  JSON back

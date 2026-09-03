@@ -5,6 +5,9 @@
  * Chapter 13 taught Fetch calling a PHP file. This is that same idea:
  * JavaScript sends JSON, this file validates, inserts, and returns JSON.
  *
+ * Table: contactMod. JSON keys (first_name, zip_code) map to columns
+ * (firstName, zip). User text is bound, never concatenated into SQL.
+ *
  * Flow:
  *   contacts.js  →  JSON POST  →  this file  →  Validation + PDO  →  JSON back
  */

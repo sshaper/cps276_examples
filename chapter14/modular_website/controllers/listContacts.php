@@ -5,8 +5,9 @@
  * Same idea as Chapter 13 list.php: JavaScript asks for data,
  * PHP reads the database and returns JSON. No page reload.
  *
- * The HTML page is views/listContactsView.php (and the update/delete
- * page also calls this same endpoint). This file is only the JSON API.
+ * Both List Contacts and Update/Delete Contact call this same endpoint.
+ * This file is only the JSON API. It maps firstName/zip to first_name/zip_code
+ * so contacts.js can use one set of keys on every page.
  */
 
 require_once __DIR__ . '/../classes/Pdo_methods.php';

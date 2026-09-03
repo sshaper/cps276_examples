@@ -3,6 +3,8 @@
  * welcome.php — landing view
  *
  * HTML only. No Fetch and no database on this screen.
+ * The other links load a new page; then contacts.js uses Fetch so add/list/update/delete
+ * do not fully reload.
  */
 function init(){
     return <<<HTML

@@ -4,7 +4,8 @@
  *
  * Shown when the URL is index.php?page=listContacts.
  * The table body starts empty. contacts.js Fetch-GETs controllers/listContacts.php
- * and fills rows as plain text (not inputs). This view does not run SQL.
+ * and fills rows as plain text (data-mode="list", not inputs).
+ * This view does not run SQL.
  */
 function init() {
     return <<<HTML
@@ -31,6 +32,7 @@ function init() {
     </table>
   </div>
 </div>
+<!-- Same contacts.js as Add and Update/Delete. Missing #contactForm is fine. -->
 <script src="js/contacts.js"></script>
 HTML;
 }

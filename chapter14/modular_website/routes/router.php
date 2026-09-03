@@ -2,18 +2,21 @@
 /**
  * router.php — chooses which HTML view to show
  *
- * Reads ?page= from the URL (a page request, not Fetch).
- * Fetch requests skip this file and call controllers/addContact.php etc. directly.
+ * Reads ?page= from the URL. This is a page request, not Fetch.
+ * Fetch skips this file and calls controllers/addContact.php (etc.) directly.
+ *
+ * Each view file defines init(). That function returns an HTML string; it does not echo.
+ * index.php echoes $nav and $content.
+ *
+ * ?? "welcome" means: visiting index.php with no page still shows Welcome.
  */
-
 $path = "index.php?page=welcome";
 
-// ?? "welcome" means: if page is missing, show Welcome. Visiting index.php still works.
 $page = $_GET["page"] ?? "welcome";
 
 if ($page === "addContact") {
     require_once "views/addContactView.php";
-    $content = init(); // init() returns an HTML string; it does not echo
+    $content = init();
 } else if ($page === "listContacts") {
     require_once "views/listContactsView.php";
     $content = init();

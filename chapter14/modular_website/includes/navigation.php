@@ -1,9 +1,11 @@
 <?php
 /**
- * navigation.php — shared navbar HTML
+ * navigation.php — shared menu HTML
  *
- * These links are normal page requests (they load index.php).
- * They are not Fetch. After a page loads, contacts.js handles add/list/update/delete.
+ * These hrefs are normal page loads (index.php?page=...). They are not Fetch.
+ * After a page loads, js/contacts.js talks to the controllers.
+ *
+ * $nav is echoed by index.php on every screen, including Welcome.
  */
 $nav=<<<HTML
      <nav class="navbar navbar-expand-lg navbar-light bg-light">

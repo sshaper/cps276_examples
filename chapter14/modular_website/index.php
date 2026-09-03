@@ -1,14 +1,17 @@
 <?php
 /**
- * index.php — the HTML page shell
+ * index.php — HTML page shell for every screen
  *
- * The browser navigates here for screens (Welcome, Add, Delete).
- * Fetch for add/list/delete does NOT come here; it calls controllers/ directly.
+ * The browser loads this file for pages (Welcome, List, Add, Update/Delete).
+ * Fetch for add/list/update/delete does NOT come here; it calls controllers/ directly.
  *
- * After the two requires, $nav and $content are ready to echo.
+ * navigation.php sets $nav (the shared menu).
+ * router.php sets $content (HTML from the chosen view's init() function).
+ *
+ * This example has no login. The final project adds sessions and staff vs admin.
  */
-require_once 'includes/navigation.php'; // sets $nav (navbar HTML)
-require_once 'routes/router.php';       // sets $content (the chosen view HTML)
+require_once 'includes/navigation.php'; // sets $nav
+require_once 'routes/router.php';       // sets $content
 
 ?>
 
@@ -24,12 +27,8 @@ require_once 'routes/router.php';       // sets $content (the chosen view HTML)
 
 	<body class="container">
 		<?php
-			/* Shared navigation from includes/navigation.php */
 			echo $nav;
-			
-			/* HTML returned by the view's init() function */
-			echo $content; 
-
+			echo $content;
 		?>
 	</body>
 </html>

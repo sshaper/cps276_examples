@@ -97,6 +97,8 @@ $contents = file_exists($path) ? file_get_contents($path) : "";
     <a href="append_log.php">Append-only log</a>
     |
     <a href="writecsv.php">Write a CSV file</a>
+    |
+    <a href="checkfile.php">Check, Create, and Delete a File</a>
   </p>
   <form method="post" class="mb-3">
     <button class="btn btn-primary" name="read" value="1">Read with fopen</button>

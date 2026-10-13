@@ -5,7 +5,7 @@ $msg = "";
 if (isset($_POST["log"])) {
     $line = date("Y-m-d H:i:s") . " - Form submitted by example script\n";
     file_put_contents($log, $line, FILE_APPEND);
-    chmod($log, 0666);
+    //chmod($log, 0666);
     $msg = "Line appended to app.log";
 }
 
@@ -27,6 +27,11 @@ $contents = file_exists($log) ? file_get_contents($log) : "";
 <body class="container py-4">
   <h1>Append-Only Log File</h1>
   <p>Each click adds one timestamped line using <code>FILE_APPEND</code>. Old lines stay.</p>
+  <p>
+    <a href="read_write.php">Read and write a text file</a>
+    |
+    <a href="writecsv.php">Write a CSV file</a>
+  </p>
   <form method="post" class="mb-3">
     <button class="btn btn-primary" name="log" value="1">Add log line</button>
     <button class="btn btn-warning" name="clear" value="1">Clear log</button>

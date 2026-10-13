@@ -4,6 +4,7 @@ $source = $folder . "/example.txt";
 $copy = $folder . "/example_copy.txt";
 $renamed = $folder . "/example_renamed.txt";
 $msg = "";
+$alert = "info";
 
 if (!is_dir($folder)) {
     mkdir($folder);
@@ -15,33 +16,45 @@ if (!file_exists($source)) {
 }
 
 if (isset($_POST["copy"])) {
-    if (file_exists($source)) {
-        copy($source, $copy);
-        $msg = "Copied to example_copy.txt";
-    } else {
+    if (!file_exists($source)) {
         $msg = "Source file missing.";
+        $alert = "danger";
+    } elseif (copy($source, $copy)) {
+        $msg = "copy() returned true. Copied to example_copy.txt.";
+        $alert = "success";
+    } else {
+        $msg = "copy() returned false.";
+        $alert = "danger";
     }
 }
 
 if (isset($_POST["rename"])) {
-    if (file_exists($copy)) {
-        rename($copy, $renamed);
-        $msg = "Renamed copy to example_renamed.txt";
-    } else {
+    if (!file_exists($copy)) {
         $msg = "example_copy.txt not found. Copy first.";
+        $alert = "danger";
+    } elseif (rename($copy, $renamed)) {
+        $msg = "rename() returned true. Renamed the copy to example_renamed.txt.";
+        $alert = "success";
+    } else {
+        $msg = "rename() returned false.";
+        $alert = "danger";
     }
 }
 
 if (isset($_POST["delete"])) {
-    if (file_exists($renamed)) {
-        unlink($renamed);
-        $msg = "Deleted example_renamed.txt";
+    if (!file_exists($renamed)) {
+        $msg = "example_renamed.txt not found. Copy, then rename, then delete.";
+        $alert = "danger";
+    } elseif (unlink($renamed)) {
+        $msg = "unlink() returned true. Deleted example_renamed.txt.";
+        $alert = "success";
     } else {
-        $msg = "Renamed file not found.";
+        $msg = "unlink() returned false.";
+        $alert = "danger";
     }
 }
 
-$listing = glob($folder . "/*");
+$listing = glob($folder . "/*") ?: [];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,16 +66,16 @@ $listing = glob($folder . "/*");
 </head>
 <body class="container py-4">
   <h1>File Management Mini Practice</h1>
-  <p>Uses <code>copy</code>, <code>rename</code>, and <code>unlink</code> with existence checks.</p>
+  <p>Uses <code>copy</code>, <code>rename</code>, and <code>unlink</code>. Each button checks that the file exists, then shows whether the function returned true.</p>
   <form method="post" class="mb-3">
     <button class="btn btn-primary" name="copy" value="1">1. Copy</button>
     <button class="btn btn-secondary" name="rename" value="1">2. Rename copy</button>
     <button class="btn btn-danger" name="delete" value="1">3. Delete renamed</button>
   </form>
   <?php if ($msg !== ""): ?>
-    <p class="alert alert-info"><?php echo htmlspecialchars($msg); ?></p>
+    <p class="alert alert-<?php echo $alert; ?>"><?php echo htmlspecialchars($msg); ?></p>
   <?php endif; ?>
-  <h2>Files in ./files</h2>
+  <h2>Files in the files folder</h2>
   <ul>
     <?php foreach ($listing as $file): ?>
       <li><?php echo htmlspecialchars(basename($file)); ?></li>

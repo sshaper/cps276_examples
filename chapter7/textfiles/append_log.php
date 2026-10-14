@@ -14,6 +14,10 @@ if (isset($_POST["clear"])) {
     $msg = "Log cleared";
 }
 
+if($msg != ""){
+  $msg = "<p class=\"text-success\">" . htmlspecialchars($msg) . "</p>";
+}
+
 $contents = file_exists($log) ? file_get_contents($log) : "";
 ?>
 <!DOCTYPE html>
@@ -32,14 +36,13 @@ $contents = file_exists($log) ? file_get_contents($log) : "";
     |
     <a href="writecsv.php">Write a CSV file</a>
   </p>
+  <?php echo $msg; ?>
   <form method="post" class="mb-3">
     <button class="btn btn-primary" name="log" value="1">Add log line</button>
     <button class="btn btn-warning" name="clear" value="1">Clear log</button>
   </form>
-  <?php if ($msg !== ""): ?>
-    <p class="text-success"><?php echo htmlspecialchars($msg); ?></p>
-  <?php endif; ?>
-  <h2>Current log</h2>
+    
+    <h2>Current log</h2>
   <pre class="border p-3 bg-light"><?php echo htmlspecialchars($contents); ?></pre>
 </body>
 </html>
